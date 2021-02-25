@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} S
+ * @return {string}
+ */
+// 思路
+// 1、如果某个字符 大于字符串长度的一半（向上取整）那么一定会挨着。return '';
+// 2、记录每个字符出现的次数。
+// 3、如果满足1 return ''
+// 4、不满足1 遍历map。创造新字符串时: 如果被添加的位置的前2位剩余个数大于1 则优先放这个字符 否则可以优先找其他剩余个数最多并且不等于前1位的字符放置
+// 5、终止条件是新字符串长度 === S.length;
+var reorganizeString = function(S) {
+  const len = S.length;
+  if (len < 2) return S;
+  let countMap = {},
+    maxCount = 0,
+    maxItem = S[0];
+  for (let item of S) {
+    countMap[item] = countMap[item] ? countMap[item] + 1 : 1;
+    if (maxCount < countMap[item]) {
+      maxCount = countMap[item];
+      maxItem = item;
+    }
+  }
+  if (maxCount > Math.ceil(len / 2)) return ''; //
+
+  // 遍历前的初始化
+  let newS = maxItem;
+  countMap[maxItem]--;
+
+  while (newS.length < len) {
+    let char = newS[newS.length - 2];
+    let prev = newS[newS.length - 1];
+    let newChar = '';
+    if (char && countMap[char] > 1) {
+      newChar += char;
+    } else {
+      for (let prop in countMap) {
+        if (prop !== prev && countMap[prop] >= 1) {
+          if (newChar) {
+            newChar = countMap[newChar] > countMap[prop] ? newChar :  prop; // 选取剩余个数多的
+          } else {
+            newChar = prop;
+          }
+        }
+      }
+    }
+      newS += newChar;
+      countMap[newChar]--;
+    console.log(newS);
+  }
+  return newS;
+};
+const S = 'baaba';
+console.log(reorganizeString(S));
+</script>
+</body>
+</html>

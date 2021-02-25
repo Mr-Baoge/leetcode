@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string} str1
+     * @param {string} str2
+     * @return {string}
+     */
+
+    var gcdOfStrings = function(str1, str2) {
+        if (!str1.includes(str2) && !str2.includes(str1)) return '';
+        function check(str) {
+
+        }
+        const len1 = str1.length;
+        const len2 = str2.length;
+        const max = str1.length > str2.length ? str1 : str2;
+        for (let i = Math.min(len1, len2); i >= 1; i--) {
+            if (len1 % i === 0 && len2 % i === 0) {
+                let res = str1.slice(0, i);
+                const count = (Math.max(len1, len2) - res.length)  / res.length;
+                for (let j = 0; j < count; j++) {
+                    res += str1.slice(0, i);
+                    if (!max.includes(res)) {
+                        return '';
+                    }
+                }
+                return str1.slice(0, i)
+            }
+        }
+    };
+    const str1 = 'CXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXN';
+    const str2 = 'CXTXNCXTXNCXTXNCXTXNCXTXN';
+    console.log(gcdOfStrings(str1, str2));
+</script>
+</body>
+</html>

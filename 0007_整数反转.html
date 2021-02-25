@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const num = 1563847412;
+    var reverse = function(x) {
+        x = x + '';
+      const start =  x[0] === '-' ? 1 : 0;
+      const res = x.slice(start).split('').reverse().join('');
+        if (res > Math.pow(2, 31) - 1 || res < -Math.pow(2, 31)) {
+          return 0;
+      }
+        return start ? '-' + res : res
+    };
+    console.log(reverse(num));
+</script>
+</body>
+</html>

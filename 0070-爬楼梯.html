@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function(n) {
+  if (n < 2) return 1;
+  let prev = 1;
+  let curr = 1;
+  while (n >= 2) {
+    n--;
+    [prev, curr] = [curr, curr + prev];
+  }
+  return curr;
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    var romanToInt = function(s) {
+         let result = 0;
+         const len = s.length;
+         const map = {
+             IV: 4,
+             IX: 9,
+             XL: 40,
+             XC: 90,
+             CD: 400,
+             CM: 900,
+             I: 1,
+             V: 5,
+             X: 10,
+             L: 50,
+             C: 100,
+             D: 500,
+             M: 1000,
+         };
+         if (s.length === 1) {
+             return map[s];
+         }
+         for (let i = 0; i < len;) {
+             if (map[s.slice(i,i+2)]) {
+                 result += map[s.slice(i,i+2)];
+                 i += 2
+             }else {
+                 result += map[s[i]];
+                 i += 1
+             }
+         }
+         return result
+    };
+    console.log(romanToInt( "LVIII"));
+</script>
+</body>
+</html>

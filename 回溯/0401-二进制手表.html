@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number} num
+ * @return {string[]}
+ */
+// 自己写的回溯
+var readBinaryWatch = function(num) {
+  let res  = [];
+  const hours = [1, 2, 4, 8];
+  const minutes = [1, 2, 4, 8, 16, 32];
+  let cache = {};
+  const helper = function(h, m, hStart, mStart, choose, count) {
+    // 剪枝
+    if (h > 11 || m > 59) {
+      return;
+    }
+
+    if (count === 0) {
+      if (m < 10) m = '0' + m;
+      const str = `${h}:${m}`;
+      if (!cache[str]) {
+        res.push(str);
+        cache[str] = true;
+      }
+      return;
+    }
+
+    if (choose === 'h') {
+      for (let i = hStart; i < 4; i++) {
+        helper(h + hours[i], m, i + 1, mStart, 'h', count - 1);
+        helper(h + hours[i], m, i + 1, mStart, 'm', count - 1);
+      }
+    }
+    else if (choose === 'm') {
+      for (let i = mStart; i < 6; i++) {
+        helper(h, m + minutes[i], hStart, i + 1, 'h', count - 1);
+        helper(h, m + minutes[i], hStart, i + 1, 'm', count - 1);
+      }
+    }
+    // 剪枝
+    if (hStart === 4 || mStart === 6) {
+      return;
+    }
+  }
+  helper(0, 0, 0, 0, 'h', num);
+  helper(0, 0, 0, 0, 'm', num);
+  return res;
+};
+
+// 看题解的暴力。
+var readBinaryWatch = function(num) {
+  let res = [];
+  for (let i = 0; i < 12; i++) {
+    for (let j = 0; j < 60; j++) {
+      if (count1(i) + count1(j) === num) {
+        res.push(`${i}:${j < 10 ? '0' + j : j}`)
+      }
+    }
+  }
+  function count1(n) {
+    let res = 0;
+    while(n) {
+      n = n & n - 1;
+      res++;
+    }
+    return res;
+  }
+  return res;
+}
+console.log(readBinaryWatch(2));
+
+</script>
+</body>
+</html>

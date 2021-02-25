@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+// var countNodes = function(root) {
+//   if (!root) return 0;
+//   return countNodes(root.left) + countNodes(root.right) + 1;
+// };
+
+// 答案
+var countNodes = function(root) {
+  if (!root) return 0;
+
+  const leftLevel = countLevel(root.left);
+  const rightLevel = countLevel(root.right);
+  if (leftLevel === rightLevel) {
+    return countNodes(root.right) +( 1 << leftLevel);
+  }
+  if (leftLevel > rightLevel) {
+    return countNodes(root.left) + (1 << rightLevel);
+  }
+
+  function countLevel(node) {
+    let level = 0;
+    while(node) {
+      level++;
+      node = node.left;
+    }
+    return level;
+  }
+};
+</script>
+</body>
+</html>

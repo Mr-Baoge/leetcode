@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 基本思路 map
+var majorityElement = function(nums) {
+  let map = {};
+  let maxCount = 0;
+  const len = nums.length;
+  for (let i = 0; i < len; i++) {
+    const num = nums[i];
+    if (!map[num]) {
+      map[num] = 1;
+    } else {
+      map[num]++;
+    }
+    maxCount = Math.max(maxCount, map[num])
+    if (maxCount > len / 2) {
+      return num
+    }
+  }
+};
+// 进阶 投票法
+var majorityElement = function(nums) {
+  let res = null;
+  let votes = 0;
+  nums.forEach(item => {
+    if (votes === 0) {
+      res = item;
+    }
+    votes += item === res ? 1 : -1;
+  })
+  return res;
+}
+</script>
+</body>
+</html>

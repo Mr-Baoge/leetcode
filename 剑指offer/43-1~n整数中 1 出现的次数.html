@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number} n
+ * @return {number}
+ */
+// 超时
+var countDigitOne = function(n) {
+  function count1(num){
+    return [].reduce.call((num + ''), (res, curr) => res += curr === "1", 0)
+  }
+  let sum = 0;
+  for (let i = 1; i <= n; i++) {
+    sum += count1(i);
+  }
+  return sum;
+};
+
+</script>
+</body>
+</html>

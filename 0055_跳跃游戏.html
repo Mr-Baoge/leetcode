@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var canJump = function(nums) {
+  const len = nums.length;
+  if (len === 1) {
+    return true;
+  }
+  let res = false;
+  const map = {};
+  function jump(nums, curr) {
+    for (let i = 1; i <= nums[curr]; i++) {
+      if (nums[curr] >= len - curr - 1) {
+        res = true;
+        return;
+      }
+      if (map[curr + '' + i]) {
+        continue;
+      }
+      map[curr + '' + i] = 1;
+      if (curr + i + 1 === len) {
+        res = true;
+        return;
+      }
+      jump(nums, curr + i);
+    }
+  }
+  jump(nums, 0);
+  return  res;
+};
+let test = [8,2,4,4,4,9,5,2,5,8,8,0,8,6,9,1,1,6,3,5,1,2,6,6,0,4,8,6,0,3,2,8,7,6,5,1,7,0,3,4,8,3,5,9,0,4,0,1,0,5,9,2,0,7,0,2,1,0,8,2,5,1,2,3,9,7,4,7,0,0,1,8,5,6,7,5,1,9,9,3,5,0,7,5];
+console.log(canJump(test))
+</script>
+</body>
+</html>

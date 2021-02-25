@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+// 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+// 思路
+// 区别于  全排列只有一个visited记录已经用过这个数字。
+// 全排列II 还需要一个deppList 记录这个重复的数字 之前已经进过递归，不需要再递归，（剪枝）
+var permuteUnique = function(nums) {
+  const len = nums.length;
+  let res = [];
+  function helper(temp, depth, indexMap, tree) {
+    tree[depth] = {}; // 这是关键！既是初始化每一层，也是对每一层的重置！
+    if (depth === len) {
+      res.push(temp);
+      return;
+    }
+    for (let i = 0; i < len; i++) {
+      if (indexMap[i] !== true && tree[depth][nums[i]] !== true) {
+        indexMap[i] = true;
+        tree[depth][nums[i]] = true;
+        helper([...temp, nums[i]], depth + 1, indexMap, tree);
+        indexMap[i] = false;
+      }
+    }
+  }
+  helper([], 0, {}, []);
+  return res;
+};
+const test = [1, 1, 2];
+console.log(permuteUnique(test));
+</script>
+</body>
+</html>

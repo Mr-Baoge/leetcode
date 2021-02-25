@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    var longestValidParentheses = function(s) {
+        const len = s.length;
+        if (s.length < 2) {
+            return 0;
+        }
+       let maxLeft = 0,
+           maxRight = 0,
+           lCount = 0,
+           rCount = 0;
+        for (let i = 0; i < len; i++) {
+            if (s[i] === '(') {
+               lCount++;
+            } else {
+                rCount++;
+            }
+            if (rCount > lCount) {
+                rCount = 0;
+                lCount = 0;
+            } else if (rCount === lCount) {
+                maxLeft = 2 * lCount > maxLeft ? 2 * lCount : maxLeft;
+            }
+        }
+        lCount = 0;
+        rCount = 0;
+        for (let i = len - 1; i >=0; i--) {
+            if (s[i] === ')') {
+                rCount++;
+            } else {
+                lCount++;
+            }
+            if (rCount < lCount) {
+                rCount = 0;
+                lCount = 0;
+            } else if (rCount === lCount) {
+                maxRight = 2 * lCount > maxRight ? 2 * lCount : maxRight;
+            }
+        }
+        return maxRight > maxLeft ? maxRight : maxLeft
+    };
+    console.log(longestValidParentheses('()()()()(()()()'));
+</script>
+</body>
+</html>

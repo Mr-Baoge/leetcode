@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} A
+ * @param {TreeNode} B
+ * @return {boolean}
+ */
+var isSubStructure = function(A, B) {
+  if (!B || !A) return false;
+  const helper = function(a, b) {
+    if (!b) return true;
+    if (!a || a.val !== b.val) return false;
+    if (a.val === b.val) {
+      return helper(a.left, b.left) && helper(a.right, b.right);
+    }
+  }
+  const queue = [A];
+  while(queue.length) {
+    let len = queue.length;
+    while(len--) {
+      const node = queue.pop();
+      if (helper(node, B)) {
+        return true;
+      }
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+  }
+  return false;
+};
+</script>
+</body>
+</html>

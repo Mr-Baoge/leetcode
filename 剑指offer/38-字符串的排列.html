@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 输入：s = "abc"
+// 输出：["abc","acb","bac","bca","cab","cba"]
+/**
+ * @param {string} s
+ * @return {string[]}
+ */
+var permutation = function(s) {
+  let cache = {};
+  let res = [];
+  const len = s.length;
+  const helper = function(str, list) {
+    if (!cache[str] && str.length === len) {
+      cache[str] = true;
+      res.push(str);
+      return;
+    }
+    for (let index = 0; index < len; index++) {
+      if (!list.includes(index)) {
+        helper(str + s[index], [...list, index]);
+      }
+    }
+  }
+  helper('', []);
+  return res;
+};
+
+
+// 交换 达到固定位置的作用
+var permutation = function(s) {
+  let res = [];
+  let temp = s.split('');
+  const len = s.length;
+  function swap(i, j) {
+    [temp[i], temp[j]] = [temp[j], temp[i]];
+  }
+  function dfs(start) {
+    if (start === len - 1) {
+      res.push(temp.join(""));
+      return;
+    }
+    let cache = {};
+    for (let i = start; i < len; i++) {
+      if (cache[temp[i]]) {
+        continue; // 剪枝 去重
+      }
+      cache[temp[i]] = true;
+      swap(i, start);
+      dfs(start + 1);
+      swap(i, start);
+    }
+  }
+  dfs(0);
+  return res;
+};
+const s = "abca";
+console.log(permutation(s));
+</script>
+</body>
+</html>

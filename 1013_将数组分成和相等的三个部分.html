@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {number[]} A
+     * @return {boolean}
+     */
+        // 思路，分成三个相等的部分，则数组所有项之和一定可以被3整除。
+    var canThreePartsEqualSum = function(A) {
+            const total = A.reduce((pre, next) => pre + next);
+            if (total % 3 !== 0) {
+                return false;
+            }
+            const target = total / 3;
+            let sum = 0;
+            let count = 0;
+            console.log(target);
+            A.forEach((item, index) => {
+                sum += item;
+                if (sum === target) {
+                    sum = 0;
+                    count += 1;
+                }
+            });
+            console.log(count);
+            return count >= 3; // 是 大于等于。要提防下面的这种测试用例
+        };
+    let test = [10,-10,10,-10,10,-10,10,-10];
+    console.log(canThreePartsEqualSum(test));;
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {number[][]} matrix
+     * @return {void} Do not return anything, modify matrix in-place instead.
+     */
+    let test = [
+        [ 5, 1, 9,11],
+        [ 2, 4, 8,10],
+        [13, 3, 6, 7],
+        [15,14,12,16]
+    ];
+    var rotate = function(matrix) {
+          const half = matrix.length / 2;
+          let i = 0;
+          let j = 0;
+          function spin(i, j) {
+              let stepI = 2 * (half - i) - 1;
+              let stepJ = 2 * (half - j) - 1;
+              let cache = matrix[i][j];
+              if (i === j) { // 这种情况 stepI和stepJ是相等的
+                  matrix[i][j] = matrix[i + stepI][j]; // 1
+                  matrix[i + stepI][j] = matrix[i + stepI][j + stepI]; // 2
+                  matrix[i + stepI][j + stepI] = matrix[i][j + stepI]; // 3
+                  matrix[i][j + stepI] = cache; //4
+              } else {
+                  matrix[i][j] = matrix[j + stepJ][i]; // 1
+                  matrix[j + stepJ][i] = matrix[i + stepI][j + stepJ]; // 2
+                  matrix[i + stepI][j + stepJ] = matrix[j][i + stepI]; // 3
+                  matrix[j][i + stepI] = cache; //4
+              }
+          }
+          while (i < Math.floor(half)) {
+              console.log(i, j);
+              spin(i, j);
+              if (++j === matrix.length - i - 1) {
+                  i++;
+                  j = i;
+              }
+          }
+        return matrix;
+    };
+    // console.log(test.slice());
+    console.log(rotate(test));
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string} digits
+     * @return {string[]}
+     */
+    const s = '2344';
+    var letterCombinations = function(s) {
+        let map = {
+            2: 'abc',
+            3: 'def',
+            4: 'ghi',
+            5: 'jkl',
+            6: 'mno',
+            7: 'pqrs',
+            8: 'tuv',
+            9: 'wxyz',
+        };
+        if (!s) {
+           return '';
+        }
+        let result = [];
+        const len = s.length;
+        let temp = [];
+        for(let i = 0; i < len; i++) {
+            temp.push(map[s[i]][0]);
+        }
+        let str = '';
+        for(let i = 0; i < len; i++) {
+            let length = temp.length;
+            while(length --) {
+                for(let j = 0; j < map[s[i]].length; j++) {
+                    str += map[s[i]][j];
+                    temp.push(str);
+                }
+                temp.pop();
+            }
+        }
+        console.log(temp);
+      //  while()
+        return result;
+    };
+
+    console.log(letterCombinations(s));
+</script>
+</body>
+</html>

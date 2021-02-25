@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} cost
+ * @return {number}
+ */
+// 数组的每个索引作为一个阶梯，第 i个阶梯对应着一个非负数的体力花费值 cost[i](索引从0开始)。
+//
+// 每当你爬上一个阶梯你都要花费对应的体力花费值，然后你可以选择继续爬一个阶梯或者爬两个阶梯。
+//
+// 您需要找到达到楼层顶部的最低花费。在开始时，你可以选择从索引为 0 或 1 的元素作为初始阶梯。
+// 示例 1:
+//
+// 输入: cost = [10, 15, 20]
+// 输出: 15
+// 解释: 最低花费是从cost[1]开始，然后走两步即可到阶梯顶，一共花费15。
+//  示例 2:
+//
+// 输入: cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
+// 输出: 6
+// 解释: 最低花费方式是从cost[0]开始，逐个经过那些1，跳过cost[3]，一共花费6。
+
+// 动态规划
+// 求f(10) 就是求min(f(9) , f(8) + cost(10));
+// 求f(9) 就是求min(f(8), f(7) + cost(9));
+// f(n) = min(f(n - 1), f(n - 2) + cost(n));
+// 特殊 fn(0) = cost(0);
+// 特殊 fn(1) = cost(1);
+
+// 上面有个错误
+// 比如f(10) 实际f(10) 在数组中是不存在的。越界的
+// 所以 fn(n) = min(f(n - 1) + cost(n - 1), f(n - 2) + cost(n - 2))
+// fn(0) = 0;
+// fn(1) = 0;
+// 递归
+var minCostClimbingStairs = function(cost) {
+  const len = cost.length;
+  if (len < 2) return 0;
+  let cache = {
+    0: 0,
+    1: 0
+  };
+  const helper = function(n) {
+    if (cache[n] !== undefined) return cache[n];
+    let res = Math.min(helper(n - 1) + cost[n - 1], helper(n - 2) + cost[n - 2]);
+    cache[n] = res;
+    return res;
+  }
+  return helper(len);
+};
+console.log(minCostClimbingStairs([1, 2, 3, 1000, 1000]));
+// 答案的迭代
+
+var minCostClimbingStairs = function(cost) {
+  const len = cost.length;
+  let prev = 0;
+  let curr = 0;
+  let i = 2;
+  while (i <= len) {
+    let temp = Math.min(curr + cost[i - 1], prev + cost[i - 2]);
+    prev = curr;
+    curr = temp;
+    i++;
+  }
+  return curr;
+};
+
+</script>
+</body>
+</html>

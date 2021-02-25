@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} num
+ * @param {number} k
+ * @return {string}
+ */
+// 给定一个以字符串表示的非负整数 num，移除这个数中的 k 位数字，使得剩下的数字最小。
+//
+// 注意:
+//
+// num 的长度小于 10002 ≥ k。
+// num 不会包含任何前导零。
+
+  // 39872312 3
+
+var removeKdigits = function(num, k) {
+  const stack = [];
+  for (let digit of num) {
+    while(stack.length && stack[stack.length - 1] > digit && k > 0) {
+      stack.pop();
+      k--;
+    }
+    stack.push(digit)
+  }
+    while(k > 0) {
+    stack.pop();
+    k--;
+  }
+
+  const len = stack.length;
+  if (stack[0] === "0") {
+    const index = stack.findIndex(item => item !== "0");
+    return stack.slice(index).join('')
+  }
+  return stack.join('') || "0"
+
+};
+console.log(removeKdigits("10200", 1));
+</script>
+</body>
+</html>

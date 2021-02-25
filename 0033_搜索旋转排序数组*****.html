@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 自己写的
+    // 二分
+    // 思路  每次从中间位置分割数组，一定有一个数组是有序的 判断哪个是有序的 然后判断目标值位于哪个数组中
+    /**
+     * @param {number[]} nums
+     * @param {number} target
+     * @return {number}
+     */
+    function binarySearch(nums, target) {
+      let left = 0;
+      let right = nums.length - 1;
+      while(left <= right) {
+        let mid = Math.floor((left + right) / 2);
+        if (nums[mid] < target) {
+          left = mid + 1;
+        }
+        if (nums[mid] > target) {
+          right = mid - 1;
+        }
+        if (nums[mid] === target) {
+          return mid;
+        }
+      }
+      return -1;
+    }
+    var selfSearch = function(nums, target) {
+     return _search(nums, target, 0);
+      function _search(nums, target, base) {
+        const len = nums.length;
+        if (len === 2) {
+          return base + (nums[0] === target ? 0 : 1)
+        }
+        const mid = Math.floor(len / 2);
+        const isLeft = nums[0] < nums[mid - 1]; // 分割后的左边数组有序
+        const isRight = nums[mid] < nums[len - 1]; // 分割后的右边数组有序
+        if (isLeft && target <= nums[mid - 1] && target >= nums[0]) { // 目标值位于左边有序数组
+          return base + binarySearch(nums.slice(0, mid), target)
+        }
+        else if (isRight && target <= nums[len - 1] && target >= nums[mid]) { // 目标值位于右边有序数组
+          return base + mid + binarySearch(nums.slice(mid), target)
+        }
+        else if (isLeft && (target > nums[mid - 1] || target < nums[0])) {// 目标值位右边无序数组
+          return _search(nums.slice(mid), target, mid + base)
+        }
+        else if (isRight && (target > nums[len - 1] || target < nums[mid])) {// 目标值位于左边无序数组
+          return _search(nums.slice(0, mid), target, base)
+        }
+        else if (!isRight && !isLeft) {
+          return -1;
+        }
+      }
+    };
+
+
+    // 题解
+var search = function(nums, target) {
+  const len = nums.length;
+  if (!len) return -1;
+  if (len === 1) return nums[0] === target ? 0 : -1;
+  let l = 0,
+      r = len - 1;
+  while(l <= r) {
+    let mid = Math.floor((l + r) / 2);
+    if (nums[mid] === target) {
+      return mid;
+    }
+    // 左边有序
+    if (nums[l] < nums[mid - 1]) {
+
+    }
+    // 右边有序
+    if (nums[mid] < nums[r]) {
+
+    }
+  }
+
+}
+</script>
+</body>
+</html>

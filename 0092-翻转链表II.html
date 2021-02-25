@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script type="module">
+import { ListNode, generateLink} from "./util/link-list.js";
+let node = generateLink([3, 5]);
+console.log(node);
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} m
+ * @param {number} n
+ * @return {ListNode}
+ */
+// 思路 count计数，到m开始进行翻转。
+// reverseHead记录着已翻转链表的头部，noReverseTail记录着未翻转的结尾。，p记录着后续节点
+// 本质上是分成了三组 1、m之前未翻转的 2、m-n 翻转的 3、n之后剩下的。用noReverseTail记录m处的节点，.next指向n之后剩下的节点 也就是p;
+var reverseBetween = function(head, m, n) {
+  if (!head || !head.next) return head;
+  let res = new ListNode(null, head);
+  let reverseTail = new ListNode(null);
+  let reverseHead = null;
+  let noReverseTail = res;
+  let count = 0;
+  while(head && count <= n) {
+    count++;
+    console.log(count);
+    console.log(head.val);
+    // 未开始翻转
+    if (count < m) {
+      noReverseTail = head;
+      head = head.next;
+    }
+    // 记录特殊节点
+    if (count === m) {
+      reverseTail = head;
+    }
+    // 开始翻转
+
+    if (count >= m && count <= n) {
+      let temp = head.next;
+      head.next = reverseHead;
+      reverseHead = head;
+      head = temp;
+    }
+  }
+  noReverseTail.next = reverseHead;
+  if (head) {
+    reverseTail.next = head;
+  }
+  return res.next;
+};
+console.log(reverseBetween(node, 1, 2))
+</script>
+</body>
+</html>

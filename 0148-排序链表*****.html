@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+import { ListNode } from "./util/link-list";
+// 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
+//
+// 进阶：
+//
+// 你可以在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序吗？
+  /**
+  * Definition for singly-linked list.
+  * function ListNode(val, next) {
+  *     this.val = (val===undefined ? 0 : val)
+  *     this.next = (next===undefined ? null : next)
+  * }
+  */
+  /**
+  * @param {ListNode} head
+  * @return {ListNode}
+  */
+  var sortList = function(head) {
+    function merge(l1, l2) {
+      let res = new ListNode();
+      let temp = res;
+      while(l1 && l2) {
+        if (l1.val < l2.val) {
+          temp.next = l1;
+          l1 = l1.next;
+        } else {
+          temp.next = l2;
+          l2 = l2.next;
+        }
+        temp = temp.next;
+      }
+      temp.next = l1 || l2;
+      return res.next;
+    }
+    function toSort(head, tail) {
+      if (!head || head === tail) return head;
+      let dummy = new ListNode(null, head);
+      let slow = dummy;
+      let fast = dummy;
+      while(fast !== tail) {
+        slow = slow.next;
+        fast = fast.next;
+        if (fast.next) fast = fast.next;
+      }
+      let next = slow.next;
+      slow.next = null;
+      const l1 = toSort(head, slow);
+      const l2 = toSort(next, tail);
+      return merge(l1, l2);
+    }
+
+    if (!head || !head.next) return head;
+    let tail = head;
+    while(tail.next) {
+      tail = tail.next;
+    }
+    return toSort(head, tail)
+  };
+</script>
+</body>
+</html>

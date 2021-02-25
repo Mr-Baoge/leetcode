@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string[]} strs
+ * @return {string[][]}
+ */
+// 思路
+// 排序后做key
+var groupAnagrams = function(strs) {
+  let map = new Map();
+  for(let str of strs) {
+    const array = Array.from(str);
+    array.sort();
+    let key = array.toString();
+    let list = map.get(key) || [];
+    list.push(str);
+    map.set(key, list);
+  }
+  return Array.from(map.values());
+};
+</script>
+</body>
+</html>

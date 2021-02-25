@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+// dp(i) = max(dp(i - 1) + nums[i], nums[i])
+  // 为了能用动态规划去做，
+var maxSubArray = function(nums) {
+  let dp = [];
+  dp[0] = nums[0];
+  const len = nums.length;
+  let ans = dp[0];
+  for (let i = 1; i < len; i++) {
+    dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
+    ans = Math.max(dp[i], ans);
+  }
+  return dp[len - 1]
+};
+</script>
+</body>
+</html>

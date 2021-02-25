@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+//   maxSum[start, end] = max(maxSum[start, end - 1] + nums[end], maxSum[start, end - 1])
+var maxSubArray = function(nums) {
+  let pre = 0,
+    maxAns = nums[0];
+  nums.forEach(item => {
+    pre = Math.max(item + pre, item);
+    maxAns = Math.max(maxAns, pre);
+  })
+  return maxAns;
+};
+</script>
+</body>
+</html>

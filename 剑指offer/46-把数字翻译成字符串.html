@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，
+// 11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。
+// 请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。
+
+/**
+ * @param {number} num
+ * @return {number}
+ */
+var translateNum = function(num) {
+  num += '';
+  const len = num.length;
+  let res = 0;
+  function helper(start) {
+    if (start >= len - 1) {
+      res++;
+      return;
+    }
+    for (let i = start; i < len; i++) {
+      // 产生分支
+      if (num[i] === '1' && i + 2 <= len) {
+        console.log('1的分支');
+        helper(i + 2);
+      }
+      // 产生分支
+      if (num[i] === '2' && num[i + 1] < 6 && i + 2 <= len) {
+        console.log('2的分支');
+        helper(i + 2);
+      }
+      // 正常走
+      helper(i + 1);
+    }
+  }
+  helper(0)
+  return res;
+};
+console.log(translateNum(12258));
+</script>
+</body>
+</html>

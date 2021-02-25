@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+
+// 设计一种算法，打印 N 皇后在 N × N 棋盘上的各种摆法，其中每个皇后都不同行、不同列，也不在对角线上
+// 这里的“对角线”指的是所有的对角线，不只是平分整个棋盘的那两条对角线。
+
+
+/**
+ * @param {number} n
+ * @return {string[][]}
+ */
+// 思路
+// check方法检查行，列，对角线。
+var solveNQueens = function(n) {
+  let res = [];
+  // function check(row, col) {
+  //   if (list[row].includes('Q')) {
+  //     return false; // 行冲突
+  //   }
+  //   for (let i = 0; i < n; i++) {
+  //     if (list[i][col] === 'Q') {
+  //       return false; // 列冲突
+  //     }
+  //   }
+  // //  反斜杠方向对角线
+  //   let rowIndex = row - col <= 0 ? 0 : row - col;
+  //   let colIndex = row - col <= 0 ? col - row : 0;
+  //   while(rowIndex < n && colIndex < n) {
+  //     if (list[rowIndex][colIndex] === 'Q') return false; // 反斜杠方向冲突
+  //     rowIndex += 1;
+  //     colIndex += 1;
+  //   }
+  //
+  //   //  斜杠方向对角线 找右上方起始点
+  //   rowIndex = row;
+  //   colIndex = col;
+  //   while(rowIndex >= 0 && colIndex < n) {
+  //     if (list[rowIndex][colIndex] === 'Q') return false; // 斜杠方向冲突
+  //     rowIndex -= 1;
+  //     colIndex += 1;
+  //   }
+  //   rowIndex = row;
+  //   colIndex = col;
+  //   while(rowIndex < n && colIndex >= 0) {
+  //     if (list[rowIndex][colIndex] === 'Q') return false; // 斜杠方向冲突
+  //     rowIndex += 1;
+  //     colIndex -= 1;
+  //   }
+  //   return true;
+  // }
+  // 简化版
+  function check(row, col) {
+    for (let i = 0; i < n; i++) {
+      // if (temp[row][i] === 'Q') return false; // 行冲突 可以不用检查  应为我们直接row + 1了;
+      if (temp[i][col] === 'Q') return false; // 列冲突;
+      if (temp[i][col - row + i] && temp[i][col - row + i] === 'Q') return false; // 反斜杠方向冲突
+      if (temp[i][col + row - i] && temp[i][col + row - i] === 'Q') return false; // 斜杠方向冲突
+    }
+    return true;
+  }
+  function helper(row) {
+    if (row === n) {
+      res.push(JSON.parse(JSON.stringify(temp)));
+      return;
+    }
+    for (let col = 0; col < n; col++) {
+      if (check(row, col)) {
+        temp[row][col] = 'Q';
+        helper(row + 1);
+        temp[row][col] = '.';
+      }
+    }
+  }
+  // 初始化
+  let temp = [];
+  for(let i = 0; i < n; i++) {
+    temp[i] = [];
+    for (let j = 0; j < n; j++) {
+      temp[i][j] = ".";
+    }
+  }
+  helper(0);
+  return res.map(arr => arr.map(item => item.join(""))) ;
+};
+console.log(solveNQueens(5));
+</script>
+</body>
+</html>

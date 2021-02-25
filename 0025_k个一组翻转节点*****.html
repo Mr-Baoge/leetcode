@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="module">
+import { ListNode, generateLink } from "./util/link-list.js";
+let test = generateLink([1,2,3,4,5]);
+// /**
+//      * Definition for singly-linked list.
+//      * function ListNode(val) {
+//      *     this.val = val;
+//      *     this.next = null;
+//      * }
+//      */
+//     /**
+//      * @param {ListNode} head
+//      * @param {number} k
+//      * @return {ListNode}
+//      */
+//     function ListNode(val) {
+//         this.val = val;
+//         this.next = null;
+//     }
+//     let five = {
+//         value:5,
+//         next: null
+//     };
+//     let four = {
+//         value:4,
+//         next: five
+//     };
+//     let three = {
+//         value:3,
+//         next: four
+//     };
+//    let two = {
+//         value:2,
+//         next: three
+//     };
+//     let head = {
+//         value:1,
+//         next: two
+//     };
+//     // 自己的利用数组翻转
+//     var reverseKGroup = function(head, k) {
+//         if (k === 1 || k === 0) {
+//             return head;
+//         }
+//         let p = head;
+//         let arr = [];
+//         let res = [];
+//         while (p) {
+//             arr.push(p);
+//             p = p.next;
+//         }
+//         const len = arr.length;
+//         for(let i = 0; i < len - k + 1; i += k) {
+//             res.push(...arr.splice(0, k).reverse())
+//         }
+//         res = res.concat(arr);
+//         for(let i = 0; i < len - 1; i++) {
+//             res[i].next = res[i + 1];
+//         }
+//         return res[0];
+//     };
+//
+//     console.log(reverseKGroup(head, 5));
+//
+//     // function reverse(arr) {
+//     //     const len = arr.length;
+//     //     let newArr = [];
+//     //     for(let i = 0; i < len; i++) {
+//     //         newArr[len - i - 1] = arr[i];
+//     //     }
+//     //     return newArr
+//     // }
+//     //
+//     // console.log(reverse([1,2,3,4,5]));
+//
+//
+// //    以下是参考别人的
+//     var reverseKGroup2 = function(head, k) {
+//         let prev = null;
+//         let cur = head;
+//         let next = null;
+//         let check = head;
+//         let canProceed = 0;
+//         let count = 0;
+//         while (canProceed < k && check !== null) {
+//             check = check.next;
+//             canProceed ++;
+//         }
+//         if (canProceed === k) {
+//             while (count < k && cur !== null) {
+//                 next = cur.next;
+//                 cur.next = prev;
+//                 prev = cur;
+//                 cur = next;
+//                 count++;
+//             }
+//             if (next !== null) {
+//                 head.next = reverseKGroup2(next, k);
+//             }
+//             return prev;
+//         } else {
+//             return head;
+//         }
+//     };
+//
+
+
+
+
+
+   // 二刷：
+    /**
+     * Definition for singly-linked list.
+     * function ListNode(val, next) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.next = (next===undefined ? null : next)
+     * }
+     */
+    /**
+     * @param {ListNode} head
+     * @param {number} k
+     * @return {ListNode}
+     */
+    // 思路
+    function reverse(head) {
+      if (!head || !head.next) return head;
+      let curr = head;
+      let prev = null;
+      while (curr) {
+        let temp = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = temp;
+      }
+      return prev;
+    }
+    var reverseKGroup = function(head, k) {
+      let count = 0;
+      let p = head;
+      let currHead = head;
+      let reversed;
+      while(p) {
+        count++;
+        if (count === k) {
+          let next = p.next;
+          p.next = null;
+          reversed = reverse(currHead);
+          currHead.next = reverseKGroup(next, k);
+          break;
+        }
+        p = p.next;
+      }
+      // 未经过翻转的
+      if (count < k) {
+        return head;
+      } else {
+        return reversed;
+      }
+    };
+
+
+console.log(reverseKGroup(test, 2));
+</script>
+</body>
+</html>

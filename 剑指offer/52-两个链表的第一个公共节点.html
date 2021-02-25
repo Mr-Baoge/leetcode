@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+var getIntersectionNode = function(headA, headB) {
+  let countA = 0;
+  let countB = 0;
+  let pA = headA;
+  let pB = headB;
+  while (pA) {
+    countA++;
+    pA = pA.next;
+  }
+  while (pB) {
+    countB++;
+    pB = pB.next;
+  }
+  pA = headA;
+  pB = headB;
+  let gap = Math.abs(countB - countA);
+  if (countA > countB) {
+    while (gap--) {
+      pA = pA.next;
+    }
+  } else {
+    while (gap--) {
+      pB = pB.next;
+    }
+  }
+
+  while (pA && pB) {
+    if (pA === pB) {
+      return pA;
+    }
+    pA = pA.next;
+    pB = pB.next;
+  }
+};
+// 双指针 相遇 （答案）
+var getIntersectionNode = function(headA, headB) {
+  let pA = headA;
+  let pB = headB;
+  while (pA && pB) {
+    if (pA === pB) {
+      return pA;
+    }
+    pA = pA.next ? pA.next : headB;
+    pB = pB.next ? pB.next : headA;
+  }
+  return null;
+}
+
+</script>
+</body>
+</html>

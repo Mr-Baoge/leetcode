@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+
+// 广度遍历 自己写的，用队列实现，存储每层的node, 然后遍历这个nodes, 把他们的left,right 在push到下一个nodes中去。
+var levelOrder = function(root) {
+  if (!root) return [];
+  let res = [];
+  let queue = [root];
+  while (queue.length) {
+    let nextQueue = [];
+    let temp = [];
+    queue.forEach(item => {
+      temp.push(item.val);
+      item.left && nextQueue.push(item.left);
+      item.right && nextQueue.push(item.right);
+    });
+    res.push(temp);
+    queue = nextQueue;
+  }
+  return res;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 二刷
+var levelOrder = function(root) {
+  if (!root) return [];
+  let currQueue = [root];
+  let nextQueue = [];
+  let res = [];
+  while(currQueue.length) {
+    let nodeValueList = [];
+    currQueue.forEach(item => {
+      nodeValueList.push(item.val);
+      if (item.left) nextQueue.push(item.left);
+      if (item.right) nextQueue.push(item.right);
+    })
+    res.push(nodeValueList);
+    currQueue = nextQueue;
+    nextQueue = [];
+  }
+  return res;
+};
+
+// 迭代
+var levelOrder = function(root) {
+  const levels = [];
+  function helper(node, level) {
+    if (levels.length === level && !levels[level]) {
+      levels[level] = [];
+    };
+    levels[level].push(node.val);
+    if (node.left) helper(node.left, level + 1);
+    if (node.right) helper(node.right, level + 1);
+  }
+  helper(root, 0);
+  return levels;
+};
+
+
+</script>
+</body>
+</html>

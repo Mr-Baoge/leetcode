@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+// 思路
+// 1、双指针找到中间节点
+// 2、翻转中间节点之后的节点
+// 3、对比
+  function reverse(node) {
+    let prev = null;
+    let curr = node;
+    while(curr) {
+      let temp = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = temp;
+    }
+    return prev;
+}
+function findMiddleNode(node) {
+    let hair = new ListNode(null, node);
+    let slow = hair;
+    let fast = node;
+    while(fast && fast.next) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    return slow;
+}
+var isPalindrome = function(head) {
+    let firstHalfEnd = findMiddleNode(head);
+    let backHalfStart = reverse(firstHalfEnd.next);
+  firstHalfEnd.next = null;
+  let p1 = head;
+  let p2 = backHalfStart;
+  let res = true;
+  while(p1 && p2) {
+    if (p1.val === p2.val) {
+      p1 = p1.next;
+      p2 = p2.next;
+    } else {
+      res = false;
+      break;
+    }
+  }
+  // 为了保持原有结构 再翻转回来;
+  let temp = reverse(backHalfStart);
+  firstHalfEnd.next = temp;
+  return res;
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+
+
+
+var findSubsequences = function(nums) {
+  // nums
+  let res = [];
+  let cache = {};
+  let temp = [];
+  const len = nums.length;
+  for (let i = 0; i < len - 1; i++) {
+    temp = [[nums[i]]];
+    for (let j = i + 1; j < len; j++) {
+      const tempLen = temp.length;
+      // 拼装数据
+      for (let t = 0; t < tempLen; t++) {
+        const item = temp[t];
+        if (nums[j] >= item[item.length - 1]) {
+          temp.push(item.concat(nums[j]));
+        }
+      }
+      // 判断校验  装箱。
+      temp.slice(1).forEach(item => {
+        if (!cache[item.join()]) {
+          cache[item.join()] = 1;
+          res.push(item);
+        }
+      })
+    }
+  }
+  return res;
+};
+let test = [4, 7, 7, 6];
+findSubsequences(test)
+</script>
+</body>
+</html>

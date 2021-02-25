@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 给定一个不包含重复数字的序列，返回所有不重复的全排列。
+    let test = [1, 1, 2];
+    var permute = function(nums) {
+        let res = [];
+        function dfs(nums, temp, indexMap, tree, deep) {
+            console.log(tree);
+            tree[deep] = {}; // 初始化 每棵树的每层
+            if (temp.length === nums.length) {
+                res.push(temp);
+                return;
+            }
+            for (let i = 0; i < nums.length; i++) {
+                if (!indexMap[i] && !tree[deep][nums[i]]) { // 索引没有用过，并且这棵树的这层没有用过这个数值，才继续递归，不然就重复了。
+                    tree[deep][nums[i]] = true;
+                    temp.push(nums[i]);
+                    indexMap[i] = true; // 记录是否出现过
+                    dfs(nums, temp.slice(), indexMap, tree.slice(), deep + 1); // 这里一定要传递一个浅克隆的副本
+                    temp.pop();
+                    indexMap[i] = false;
+                }
+            }
+        }
+        dfs(nums, [], {}, [], 0);
+        return res
+    };
+    console.log(permute(test));
+</script>
+</body>
+</html>

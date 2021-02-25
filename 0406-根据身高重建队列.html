@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 假设有打乱顺序的一群人站成一个队列。 每个人由一个整数对(h, k)表示，
+// 其中h是这个人的身高，k是排在这个人前面且身高大于或等于h的人数。 编写一个算法来重建这个队列。
+// 输入:
+//   [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
+
+// 输出:
+//   [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
+// 思路：先按身高降序 k升序 然后找位置 插入
+// 和答案2思想一模一样!
+// [7,0] [7, 1]
+// [7,0] [6, 1] [7, 1]
+// [5, 0] [7, 0]  [5, 2] [6, 1] [7, 1]
+// [5, 0] [7, 0] [5, 2] [6, 1] [4, 4] [7, 1]
+
+/**
+ * @param {number[][]} people
+ * @return {number[][]}
+ */
+var reconstructQueue = function(people) {
+  people = people.sort((a, b) => {
+    // 身高倒叙 、 k升序
+    if (b[0] !== a[0]) return b[0] - a[0];
+    return a[1] - b[1]
+  });
+  const res = [];
+  people.forEach(item => {
+    let position = 0;
+    let [v, k] = item;
+    const len = res.length;
+    // 找位置
+    while(k > 0 && position < len) {
+      if (res[position][0] >= v) {
+        k--;
+      }
+      position++;
+    }
+    //  放
+    for (let i = len; i >= position; i--) {
+      res[i] = res[i - 1];
+    }
+    res[position] = item;
+  })
+  return res;
+};
+const test = [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]];
+reconstructQueue(test)
+</script>
+</body>
+</html>

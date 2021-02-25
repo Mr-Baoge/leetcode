@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+// 状态转移方程
+    // fn(n) = max(fn(n-1), fn(n));
+    // fn(n) = n;    (n = 0 | n = 1);
+var lengthOfLIS = function(nums) {
+   const len = nums.length;
+        if (len <= 1) return len;
+        let res = [];
+   let max = 1;
+   let temp = 1;
+   let currMax = nums[0];
+   for (let i = 0; i < len - 1; i++) {
+       temp = 1;
+       currMax = nums[i];
+       for (let j = i + 1; j < len; j++) {
+           if (nums[j] > currMax) {
+               currMax = [nums[j]];
+               if(++temp > max) max = temp;
+           }
+       }
+   }
+   return max;
+};
+let test = [10,9,2,5,3,4];
+console.log(lengthOfLIS(test));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 二刷
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+// 动态规划
+var lengthOfLIS = function(nums) {
+  const len = nums.length;
+  if (!len) return 0;
+  let dp = new Array(len).fill(1);
+  let max = 1;
+  for (let i = 1; i < len; i++) {
+    for (let j = i - 1; i >= 0; i--) {
+      if (nums[i] > nums[j]) {
+        dp[i] = Math.max(dp[i], dp[j] + 1);
+        max = Math.max(max, dp[i])
+      }
+    }
+  }
+  return max;
+};
+
+
+// 贪心 + 二分 巧啊！
+var lengthOfLIS = function(nums) {
+  const len = nums.length;
+  let tails = [];
+  let res = 0;
+  for (let i = 0; i < len; i++) {
+    let left = 0;
+    let right = res;
+    // 二分查找这个数应该在的位置，以贪心的策略插入，
+    // 如果原数组是递增的，那么tails数组将不会出现覆盖的情况
+    // 如果原数组[10, 2 , 3] tails = [10] tails = [2] tails = [2, 3]会出现覆盖的情况  就是2把10覆盖了。
+    while (left < right) {
+      const mid = Math.floor(left + (right - left) / 2);
+      if (tails[mid] < nums[i]) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+    tails[left] = nums[i];
+    console.log(tails);
+    if (res === right) res++;
+  }
+  return res;
+};
+console.log(lengthOfLIS([10, 2, 3, 1, 2, 3]));
+
+</script>
+</body>
+</html>

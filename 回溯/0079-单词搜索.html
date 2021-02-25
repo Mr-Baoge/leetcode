@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+// 屡次提交卡在最后的超时题解
+// 原因是used对象的key考虑不周 不能直接用 ${row}${col} 比如1、19 和11、9就变成一样的了  都是119。 ${row}-${col} 就可以避免。
+var exist = function(board, word) {
+
+  const rowLen = board.length;
+  const colLen = board[0].length;
+
+  function helper(row, col, index, used) {
+    // 用过
+    if (used[`${row}-${col}`]) {
+      return false;
+    }
+    // 出口
+
+    if (board[row][col] === word[index]) {
+      if (index === word.length - 1) {
+        return true;
+      }
+      used[`${row}-${col}`] = true;
+      // 递归
+        if (row > 0 &&  helper(row - 1, col, index + 1, used)) return true; // 上
+        if (row < rowLen - 1 &&  helper(row + 1, col, index + 1, used)) return true // 下
+        if (col > 0 &&  helper(row, col - 1, index + 1, used)) return true; // 左
+        if (col < colLen - 1 &&  helper(row, col + 1, index + 1, used)) return true // 右
+      // 回溯
+      used[`${row}-${col}`] = false;
+      return false;
+    } else {
+      return false;
+    }
+  }
+  for (let row = 0; row < rowLen; row++) {
+    for (let col = 0; col < colLen; col++) {
+       if (helper(row, col, 0, {})) {
+         return true;
+       }
+    }
+  }
+  return false;
+};
+
+let board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
+let word = "ABCB";
+console.log(word);
+console.log(exist(board, word));
+</script>
+</body>
+</html>

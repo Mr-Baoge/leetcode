@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 二分
+/**
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var minArray = function(numbers) {
+  let left = 0;
+  let right = numbers.length - 1;
+  while (left < right) {
+    const mid = left + Math.floor((right - left) / 2);
+    if (numbers[mid] === numbers[right]) {
+      right--;
+    }
+    else if (numbers[mid] < numbers[right]) {
+      right = mid;
+    }
+    else if (numbers[mid] > numbers[right]) {
+      left = left + 1;
+    }
+  }
+  return numbers[left];
+};
+</script>
+</body>
+</html>

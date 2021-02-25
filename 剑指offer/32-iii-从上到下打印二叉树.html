@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var levelOrder = function(root) {
+  if (!root) return [];
+  let queue = [root];
+  let res = [];
+  while(queue.length) {
+    const len = queue.length;
+    let temp = [];
+    const method = res.length & 1 ? 'unshift' : 'push'
+    for (let i = 0; i < len; i++) {
+      const node = queue.shift();
+      temp[method](node.val);
+      node.left && queue.push(node.left);
+      node.right && queue.push(node.right);
+    }
+    res.push(temp)
+  }
+  return res;
+};
+</script>
+</body>
+</html>

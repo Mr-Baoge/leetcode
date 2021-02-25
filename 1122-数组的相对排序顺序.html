@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} arr1
+ * @param {number[]} arr2
+ * @return {number[]}
+ */
+var relativeSortArray = function(arr1, arr2) {
+  const sortMap = {};
+  arr2.forEach((item, index) => {
+    sortMap[item] = index + 1; // 为了避免0 == false 从而下面判断需要 用 === undefined 去判断
+  })
+  arr1 = arr1.sort((a, b) => {
+    if (sortMap[a] && sortMap[b]) {
+      return sortMap[a] - sortMap[b]
+    } else if (sortMap[a] && !sortMap[b]){
+      return -1; // 不换
+    } else if (!sortMap[a] && sortMap[b]){
+      return 1 // 换
+    } else if (!sortMap[a] && !sortMap[b]) {
+      return a - b
+    }
+    // 简洁写法
+    // const x = sortMap[a];
+    // const y = sortMap[b];
+    // if (x) {
+    //   return y ? x - y : false;
+    // } else {
+    //   return y ? true : a - b;
+    // }
+  })
+  return arr1;
+};
+let arr1 = [26,21,11,20,50,34,1,18];
+let arr2 = [21,11,26,20]
+console.log(relativeSortArray(arr1, arr2));
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string} s
+     * @return {string}
+     */
+    const str = "";
+    var longestPalindrome = function(s) {
+        function isPalindrome(str) {
+            const len = str.length;
+            for (let i = 0; i < len / 2; i++) {
+                if (str[i] !== str[len - i - 1]) {
+                    return 0
+                }
+            }
+            return len;
+        }
+        const len = s.length;
+        if(len === 1){
+            return s
+        }
+        let result = s.slice(0,1);
+        for( let i = 0; i < len - 1; i++) {
+            for( let j = i + 1; j < len; j++) {
+                result = isPalindrome(s.slice(i,j + 1)) > result.length ? s.slice(i,j + 1) : result;
+                if (result.length > len - i) { // 如果比当前可能存在的最大的情况要大，直接return
+                    return result;
+                }
+            }
+        }
+        return result;
+    };
+    console.log(longestPalindrome(str));
+
+
+    // function isPalindrome(str){
+    //     const len = str.length;
+    //     for (let i = 0; i < len / 2; i++) {
+    //         if (str[i] !== str[len - i - 1]) {
+    //             return false
+    //         }
+    //     }
+    //     return true;
+    // };
+    // console.log(isPalindrome('aba'));
+    // console.log(isPalindrome('abb'));
+    // console.log(isPalindrome('abba'));
+    // console.log(isPalindrome('abbb'));
+</script>
+</body>
+</html>

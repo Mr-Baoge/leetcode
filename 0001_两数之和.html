@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const candies = [1, 1, 12 ,12],
+          candiesNeed = 24;
+    const twoSum = function(candies, candiesNeed) {
+        let cache = {};
+             const len = candies.length;
+        for (let i = 0; i < len; i++) {
+             console.log(i);
+            // 如果之前没有碰到过这个数，就将其作为key放入缓存中，值为其索引。
+            if(cache[candies[i]] === undefined ){
+                cache[candies[i]] = i;
+                // 用总数减去刚缓存的这个数，如果cache存在（除去他本身）则找到答案直接return;
+                if(cache[candiesNeed - candies[i]] !== undefined && cache[candiesNeed - candies[i]] !== i){
+                    return [cache[candiesNeed - candies[i]], i];
+                }
+            }else{  // 如果之前有缓存过，就需要判断，说明已经走了上面的判断了，只需要判断他的两倍是否等于target。
+                // 是的话，return 当前索引和 缓存的之前的那个相等的数的索引。
+                if(2 * candies[i] === candiesNeed){
+                    return [cache[candies[i]], i];
+                }
+            }
+        }
+    };
+    console.log(twoSum(candies, candiesNeed));
+</script>
+</body>
+</html>

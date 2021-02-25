@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * initialize your data structure here.
+ */
+var MedianFinder = function() {
+  this.sortList = [];
+};
+
+/**
+ * @param {number} num
+ * @return {void}
+ */
+MedianFinder.prototype.addNum = function(num) {
+  this.sortList.push(num);
+    this.sortList.sort((a, b) => a - b);
+};
+
+/**
+ * @return {number}
+ */
+MedianFinder.prototype.findMedian = function() {
+  const len = this.sortList.length;
+  if (!len) return null;
+  const mid = Math.floor(len / 2)
+  if (len & 1) {
+    return this.sortList[mid];
+  }
+  return (this.sortList[mid] + this.sortList[mid - 1]) / 2
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * var obj = new MedianFinder()
+ * obj.addNum(num)
+ * var param_2 = obj.findMedian()
+ */
+</script>
+</body>
+</html>

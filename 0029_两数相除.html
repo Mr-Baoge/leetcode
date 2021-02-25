@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {number} dividend
+     * @param {number} divisor
+     * @return {number}
+     */
+    const dividend = 10;
+    const divisor = 3;
+    var divide = function(dividend, divisor) {
+        let flag = 0;
+        if((divisor < 0 && dividend < 0) || (divisor > 0 && dividend > 0)) {
+            flag = 1;
+        }
+        dividend = Math.abs(dividend);
+        divisor = Math.abs(divisor);
+        let res = 0;
+        let sum = divisor;
+        let now = divisor;
+        let map = {
+        };
+        map[divisor] = 1;
+        while(sum <= dividend) {
+                res += map[now];
+                map[now + now] = map[now] + map[now];
+                now += now;
+                if (sum + now > dividend) {
+                    now = divisor;
+                }
+            sum += now;
+
+            console.log()
+            }
+        if(res > Math.pow(2, 31) - 1) {
+                return  flag ? Math.pow(2, 31) - 1 : -Math.pow(2, 31);
+            }
+            return flag ? res : -res;
+    };
+    console.log(divide(2147483647, 2));
+</script>
+</body>
+</html>

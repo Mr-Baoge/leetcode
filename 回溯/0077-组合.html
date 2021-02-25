@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number} n
+ * @param {number} k
+ * @return {number[][]}
+ */
+// 1、递归树
+// 2、根据题意确定结束条件
+// 3、选择函数参数！
+// 4、判断是否需要剪枝
+// 5、递归调用
+// 6、撤销选择
+var combine = function(n, k) {
+  let res = [];
+  function helper(temp, start) { // 3 参数
+    if (temp.length === k) { // 2 结束条件
+      res.push(temp);
+      return;
+    }
+    for (let i = start; i <= n; i++) {
+      // 标准写法 3行
+      temp.push(i);
+      helper([...temp], i + 1); // 递归调用
+      temp.pop() // 撤销选择
+      // 简单写法 1行
+      // helper([...temp, i], i + 1); // 递归调用
+    }
+  }
+  helper([], 1);
+  return res;
+};
+</script>
+</body>
+</html>

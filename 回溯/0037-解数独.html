@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+let test = [
+  ["5","3",".",".","7",".",".",".","."],
+  ["6",".",".","1","9","5",".",".","."],
+  [".","9","8",".",".",".",".","6","."],
+  ["8",".",".",".","6",".",".",".","3"],
+  ["4",".",".","8",".","3",".",".","1"],
+  ["7",".",".",".","2",".",".",".","6"],
+  [".","6",".",".",".",".","2","8","."],
+  [".",".",".","4","1","9",".",".","5"],
+  [".",".",".",".","8",".",".","7","9"],
+];
+
+/**
+ * @param {character[][]} board
+ * @return {void} Do not return anything, modify board in-place instead.
+ */
+// 思路
+// 遇到空格 从1-9开始遍历，用check方法检查是否可以放，可以就放 都不可以就回溯。
+var solveSudoku = function(board) {
+  let flag = false;
+  function check(row, col, target) {
+    target = target + '';
+    // 行重复
+    if (board[row].includes(target)) {
+      return false;
+    }
+    for (let i = 0; i < 9; i++) {
+      // 列重复
+      if (board[i][col] === target) {
+        return false;
+      }
+    }
+  //  定位坐标所在的区域
+    let rowStart = Math.floor(row / 3) * 3;
+    let colStart = Math.floor(col / 3) * 3;
+    for (let i = rowStart; i < rowStart + 3; i++) {
+      for (let j = colStart; j < colStart + 3; j++) {
+        // 区域内重复
+        if (board[i][j] === target) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+  function helper(row, col) {
+    if (col === board[0].length) {
+      col = 0;
+      row++;
+      // 递归出口
+      if (row === board.length) {
+        return true;
+      }
+    }
+    // 空位才填充，否则直接到下一个。
+    if (board[row][col] === '.') {
+      for (let i = 1; i <= 9; i++) {
+        if (check(row, col, i)) {
+          board[row][col] = i + '';
+          if (helper(row, col + 1)) {            // 重点，递归到头，这里只有层层递归到最后 才会 return true; return true以后 下面 ↓ 就不需要再回溯!
+            return true;
+          }
+          board[row][col] = '.';
+        }
+      }
+      return false;
+    } else {
+      return helper(row, col + 1);
+    }
+  }
+  helper(0, 0);
+  return board
+};
+console.log(solveSudoku(test));
+</script>
+</body>
+</html>

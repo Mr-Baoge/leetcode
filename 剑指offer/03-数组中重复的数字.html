@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+// 1、map
+var findRepeatNumber = function(nums) {
+  const cache = {};
+  for (let prop of nums) {
+    if (!cache[prop]) {
+      cache[prop] = true;
+      continue;
+    }
+    return prop
+  }
+};
+const nums = [2,2,3];
+// 就地置换
+var findRepeatNumber = function(nums) {
+  const len = nums.length;
+  for (let i = 0; i < len; i++) {
+    while(nums[i] !== i) {
+      if (nums[i] === nums[nums[i]]) {
+        return nums[i]
+      }
+      [nums[nums[i]], nums[i]] = [nums[i], nums[nums[i]]]
+    }
+  }
+};
+</script>
+</body>
+</html>

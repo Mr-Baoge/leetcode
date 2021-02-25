@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {number} num
+     * @return {string}
+     */
+    var intToRoman = function(num) {
+        function addStr (count, small, mid, big) {
+            console.log(count, small);
+            if (count === 9) {
+                result += small + big;
+                count -= 9;
+                return;
+            }
+             if (count >= 5) {
+                result += mid;
+                 count -= 5;
+             }
+             if (count >= 4) {
+                result += small + mid;
+                 count -= 4;
+             }
+                for (let i = 0; i < count; i++) {
+                    result += small
+                }
+        }
+        let result = '';
+        const tCount = Math.floor(num / 1000);
+            for (let i = 0; i < tCount; i++) {
+                result += 'M';
+            }
+        const hCount = Math.floor(num % 1000 / 100);
+        addStr(hCount, 'C', 'D', 'M');
+        const tenCount =  Math.floor(num % 100 / 10);
+        addStr(tenCount, 'X', 'L', 'C');
+        const SingleCount = num % 10;
+        addStr(SingleCount, 'I', 'V', 'X');
+        return result;
+    };
+    console.log(intToRoman(58));
+</script>
+</body>
+</html>

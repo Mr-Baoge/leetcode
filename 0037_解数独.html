@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {character[][]} board
+     * @return {void} Do not return anything, modify board in-place instead.
+     */
+    let test = [
+        ["5","3",".",".","7",".",".",".","."],
+        ["6",".",".","1","9","5",".",".","."],
+        [".","9","8",".",".",".",".","6","."],
+        ["8",".",".",".","6",".",".",".","3"],
+        ["4",".",".","8",".","3",".",".","1"],
+        ["7",".",".",".","2",".",".",".","6"],
+        [".","6",".",".",".",".","2","8","."],
+        [".",".",".","4","1","9",".",".","5"],
+        [".",".",".",".","8",".",".","7","9"],
+    ];
+    var solveSudoku = function(board) {
+         let rowsUse = [],
+             colsUse = [],
+             boxUse = [];
+         // 初始化
+        for (let i = 0; i < 9; i++) {
+            rowsUse.push({});
+            colsUse.push({});
+            boxUse.push({});
+        }
+        // 赋值
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                let target = board[row][col];
+                let boxIndex = Math.floor(row / 3) * 3 + Math.floor(col / 3);
+                if (target !== '.') {
+                    rowsUse[row][target] = 1;
+                    colsUse[col][target] = 1;
+                    boxUse[boxIndex][target] = 1;
+                }
+            }
+        }
+        dfs(board, rowsUse, colsUse, boxUse, 0, 0);
+        function dfs (board, rowsUse, colsUse, boxUse, row, col) {
+            if (col === 9) {
+                col = 0;
+                row++;
+                if(row === 9){
+                    console.log('row=9!!');
+                    return true;
+                }
+            }
+            let boxIndex = Math.floor(row / 3) * 3 + Math.floor(col / 3);
+            // 如果是空 试图去从 1 - 9 填数
+            if (board[row][col] === '.') {
+                for (let i = 1; i <= 9; i++) {
+                    // 如果行 列 box 都没用过这个数字
+                    if (!rowsUse[row][i] && !colsUse[col][i] && !boxUse[boxIndex][i]) {
+                        board[row][col] = i + '';
+                        rowsUse[row][i] = 1;
+                        colsUse[col][i] = 1;
+                        boxUse[boxIndex][i] = 1;
+                        if (dfs(board, rowsUse, colsUse, boxUse, row, col + 1)) {
+                            return true;
+                        }
+                        board[row][col] = '.';
+                        rowsUse[row][i] = 0;
+                        colsUse[col][i] = 0;
+                        boxUse[boxIndex][i] = 0;
+                    }
+                }
+            } else {
+                // 继续进行
+                return dfs(board, rowsUse, colsUse, boxUse, row, col + 1);
+            }
+        }
+        return board;
+    };
+    console.log(solveSudoku(test));
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+import { ListNode } from "./util/link-list.js";
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} x
+ * @return {ListNode}
+ */
+// 思路 两个链表 一个记录比x小的 一个放比x大的 最后合一起
+var partition = function(head, x) {
+  if (!head) return head;
+  let small = new ListNode(null);
+  let big = new ListNode(null);
+  let p = head;
+  let smallNode = small;
+  let bigNode = big;
+  while(p) {
+    if (p.val < x) {
+      smallNode.next = p;
+      smallNode = smallNode.next;
+    } else {
+      bigNode.next = p;
+      bigNode = bigNode.next;
+    }
+    p = p.next;
+  }
+  smallNode.next = big.next;
+  bigNode.next = null; // 否则会成环
+  return small.next;
+};
+</script>
+</body>
+</html>

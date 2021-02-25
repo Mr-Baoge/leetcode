@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var mirrorTree = function(node) {
+    if (!node) return node;
+    let temp = node.left;
+    node.left = mirrorTree(node.right);
+    node.right = mirrorTree(temp);
+    return node
+};
+</script>
+</body>
+</html>

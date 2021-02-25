@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var isPalindrome = function(str) {
+        str = '' + str;
+        const len = str.length;
+        for (let i = 0; i < len / 2; i++) {
+            console.log(str[i], str[len - i -1])
+            if (str[i] !== str[len - i - 1]) {
+                return false;
+            }
+        }
+        return true;
+    };
+    console.log(isPalindrome('-121'));
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * Definition for singly-linked list.
+     * function ListNode(val) {
+     *     this.val = val;
+     *     this.next = null;
+     * }
+     */
+    /**
+     * @param {ListNode} head
+     * @return {ListNode}
+     */
+    var e = {
+        val: 5,
+        next: null
+    }
+    var d = {
+        val: 4,
+        next: e
+    }
+    var c = {
+        val: 3,
+        next: d
+    }
+    var b = {
+        val: 2,
+        next: c
+    }
+    var a = {
+        val: 1,
+        next: b
+    }
+
+
+
+    // 递归
+    var reverseList = function(head) {
+        if (!head || !head.next) return head;
+        let res;
+        function resolve(node) {
+            if (node.next.next) {
+                resolve(node.next);
+            }
+            if (!res) res = node.next; // 记录尾结点。最后需要return；而且只能赋值一次。
+            node.next.next = node;
+            node.next = null;
+        }
+        resolve(head);
+        return res;
+    };
+    // 迭代
+    var reverseListIteration = function(head) {
+        if (!head || !head.next) return head;
+        let pre = null;
+        let curr = head;
+        while(curr) {
+            let temp = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = temp;
+        }
+        return pre;
+    };
+    // 递归
+    var reverseListRecursion = function (head) {
+      if (!head || !head.next) return head;
+      let res;
+      function reverse(node) {
+        if (!node.next.next) {
+          node.next.next = node;
+          res = node.next;
+        } else {
+          reverse(node.next);
+          node.next.next = node;
+          node.next = null;
+        }
+      }
+      reverse(head);
+      return res;
+    }
+    console.log(reverseListRecursion(a));
+</script>
+</body>
+</html>

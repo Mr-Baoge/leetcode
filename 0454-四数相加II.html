@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} A
+ * @param {number[]} B
+ * @param {number[]} C
+ * @param {number[]} D
+ * @return {number}
+ */
+// 思路1 暴力法 O(n4) 超时。
+var fourSumCount = function(A, B, C, D) {
+  const len = A.length;
+  let ans = 0;
+  for (let i = 0;i < len; i++) {
+    for (let j = 0; j < len; j++) {
+      for (let k = 0; k < len; k++) {
+        for (let l = 0; l < len; l++) {
+          if (A[i] + B[j] + C[k] +D[l] === 0) {
+            ans++;
+          }
+        }
+      }
+    }
+  }
+  return ans;
+};
+// 思路2 用一个map 优化到O（n3）超时。
+var fourSumCount = function(A, B, C, D) {
+  const len = A.length;
+  let ans = 0;
+  let map = {};
+  D.forEach(item => {
+    if (map[item] === undefined) {
+      map[item] = 1;
+    } else {
+      map[item]++;
+    }
+  })
+  for (let i = 0;i < len; i++) {
+    for (let j = 0; j < len; j++) {
+      for (let k = 0; k < len; k++) {
+        if (map[-(A[i] + B[j] + C[k])]) {
+          ans += map[-(A[i] + B[j] + C[k])];
+        }
+      }
+    }
+  }
+  return ans;
+};
+// 思路三 分组hash AB 一组 CD 一组 再记录重复次数
+var fourSumCount = function(A, B, C, D) {
+  const len = A.length;
+  let ans = 0;
+  let map = {};
+  for (let i = 0; i < len; i++) {
+    for (let j = 0; j < len; j++) {
+      const target = map[A[i] + B[j]];
+      map[A[i] + B[j]] = target ? target + 1 : 1;
+    }
+  }
+  for (let i = 0; i < len; i++) {
+    for (let j = 0; j < len; j++) {
+      if (map[-(C[i] + D[j])]) {
+        ans += map[-(C[i] + D[j])];
+      }
+    }
+  }
+  return ans;
+  }
+ </script>
+</body>
+</html>

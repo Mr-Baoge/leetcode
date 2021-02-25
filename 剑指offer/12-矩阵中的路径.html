@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+var exist = function(board, word) {
+  const rowLen = board.length;
+  const colLen = board[0].length;
+  function helper(i, j, word, index) {
+    // 溢出
+    if (i >= rowLen || i < 0 || j >= colLen || j < 0 || board[i][j] !== word[index]) return false;
+    // 出口
+    if (index === word.length - 1) {
+      return true;
+    }
+    let temp = board[i][j];
+    board[i][j] = '-';
+    const res = helper(i + 1, j, word, index + 1)
+      || helper(i - 1, j, word, index + 1)
+      || helper(i, j + 1, word, index + 1)
+      || helper(i, j - 1, word, index + 1);
+    board[i][j] = temp;
+    return res;
+
+  }
+  for (let i = 0; i < rowLen; i++) {
+    for (let j = 0; j < colLen; j++) {
+      if(helper(i, j, word, 0)) return true;
+    }
+  }
+  return false;
+};
+</script>
+</body>
+</html>

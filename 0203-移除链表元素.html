@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+ */
+var removeElements = function(head, val) {
+  let dummy = new ListNode(null, head);
+  let p = dummy;
+  while(p && p.next) {
+    if (p.next.val === val) {
+      p.next = p.next.next;
+    } else {
+      p = p.next;
+    }
+  }
+  return dummy.next;
+};
+</script>
+</body>
+</html>

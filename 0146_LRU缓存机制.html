@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<virtualHead>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</virtualHead>
+<body>
+<script>
+class ListNode {
+  constructor(key, value) {
+    this.key = key;
+    this.value = value;
+    this.prev = null;
+    this.next = null;
+  }
+}
+
+class LRUCache {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.cacheMap = {};
+    this.count = 0;
+    this.virtualHead = new ListNode();
+    this.virtualTail = new ListNode();
+    this.virtualHead.next =  this.virtualTail;
+    this.virtualTail.prev = this.virtualHead;
+  }
+  get(key) {
+    const node = this.cacheMap[key];
+    if (!node) return -1;
+    this.moveToHead(node);
+    return node.value;
+  }
+  put(key, value) {
+    const node = this.cacheMap[key];
+    // 没有存过
+    if (!node) {
+      const node = new ListNode(key, value);
+      this.cacheMap[key] = node;
+      this.addToHead(node);
+      this.count++;
+      if (this.count > this.capacity) {
+        this.removeLRUItem();
+      }
+    } else { // 以前存过
+      node.value = value;
+      this.moveToHead(node)
+    }
+  }
+
+  moveToHead(node) {
+    this.removeFromList(node);
+    this.addToHead(node);
+  }
+
+  removeFromList(node) {
+    let tempPrev = node.prev;
+    let tempNext = node.next;
+    tempPrev.next = tempNext;
+    tempNext.prev = tempPrev;
+  }
+
+  addToHead(node) {
+    node.next = this.virtualHead.next;
+    node.prev = this.virtualHead;
+    this.virtualHead.next.prev = node;
+    this.virtualHead.next = node;
+  }
+  // 从cachaMap中删除
+  removeLRUItem() {
+    const node = this.popTail();
+    delete this.cacheMap[node.key];
+    this.count--;
+  }
+  // 删除最后的尾结点
+  popTail() {
+    const node = this.virtualTail.prev;
+    this.virtualTail.prev = node.prev;
+    node.prev.next = this.virtualTail;
+    return node;
+  }
+}
+</script>
+</body>
+</html>

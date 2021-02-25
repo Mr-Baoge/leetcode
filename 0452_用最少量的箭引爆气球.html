@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[][]} points
+ * @return {number}
+ */
+// first 思路：
+// 排序
+// 从左向右遍历
+// 找重合的部分 没有重合的 res++;
+// 有重合的 用重合的部分向右找 直到找到没公共的，res++;
+// var findMinArrowShots = function(points) {
+//   const len = points.length;
+//   if (!len) return 0;
+//   // points = points.sort((a, b) => a[0] - b[0]); // 第一次这样排序有问题 input:[[3,9],[7,12],[3,8],[6,8],[9,10],[2,9],[0,9],[3,9],[0,6],[2,8]]
+//   points = points.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+//   let cover = points[0];
+//   let res = 1;
+//   for (let i = 1;i < len ; i++) {
+//     if (cover[1] >= points[i][0]) {
+//       // cover = [points[i][0], cover[1]]; // error 需要取小的。
+//       cover = [points[i][0], Math.min(cover[1], points[i][1])]; // success
+//     } else {
+//       res++;
+//       cover = points[i];
+//     }
+//   }
+//   return res;
+// };
+
+// 答案
+var findMinArrowShots = function(points) {
+  if (!points.length) return 0;
+  points = points.sort((a, b) => a[1] - b[1]);
+  let res = 1;
+  let pos = points[0][1];
+  for (let item of points) {
+    if (pos < item[0]) {
+      res++;
+      pos = item[1];
+    }
+  }
+  return res;
+};
+console.log(findMinArrowShots([[9,12],[1,10],[4,11],[8,12],[3,9],[6,9],[6,7]]));
+</script>
+</body>
+</html>

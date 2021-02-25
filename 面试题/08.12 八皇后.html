@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 设计一种算法，打印 N 皇后在 N × N 棋盘上的各种摆法，其中每个皇后都不同行、不同列，也不在对角线上。
+// 这里的“对角线”指的是所有的对角线，不只是平分整个棋盘的那两条对角线。
+
+/**
+ * @param {number} n
+ * @return {string[][]}
+ */
+var solveNQueens = function(n) {
+  function init() {
+    const temp = [];
+    for(let i = 0; i < n; i++ ){
+      temp[i] = [];
+      for (let j = 0; j < n; j++) {
+        temp[i][j] = '.'
+      }
+    }
+    return temp;
+  }
+  function isOk(row, col) {
+
+    for(let i = 0; i < n; i++ ) {
+      // 行冲突
+      if (temp[row][i] !== '.') return false;
+      // 列冲突
+      if (temp[i][col] !== '.') return false;
+      // 对角线冲突(\)  row col 要保持 row - 1, col - 1; row -2, col -2; 既row - x, col - x;
+      // row - x = i;
+      // x = row - i;
+      if (temp[i][col - row + i] && temp[i][col - row + i] !== '.') return false;
+      // 对角线冲突(/) row col 要保持 row - 1, col + 1; row - 2, col + 2; 既 row - x, col + x;
+      // row - x = i;
+      // x = row - i;
+      if (temp[i][col + row - i] && temp[i][col + row - i] !== '.') return false;
+    }
+    return true;
+  }
+  const temp = init();
+  const res = [];
+  function find(row) {
+    // 出口
+    if (row === n) {
+      res.push(temp.slice().map(item => item.join('')));
+      return;
+    }
+    for (let col = 0; col < n; col++) {
+      if (isOk(row, col)) {
+        temp[row][col] = 'Q';
+        find(row + 1);
+        temp[row][col] = '.'
+      }
+    }
+  }
+  find(0);
+  return res;
+};
+console.log(solveNQueens(4));
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * Definition for a binary tree node.
+     * function TreeNode(val) {
+     *     this.val = val;
+     *     this.left = this.right = null;
+     * }
+     */
+    /**
+     * @param {TreeNode} root
+     * @return {boolean}
+     */
+    var isValidBST = function(root) {
+        function search (p, lower, upper) {
+            if (p === null) {
+                return false;
+            }
+            const val = p.val;
+            if ((p.left !== null && lower > val) || (p.right !== null && upper < val)) {
+                return false;
+            }
+            if (p.left !== null) {
+                if (!search(p.left, val, upper)) return false;
+            }
+            if (p.right !== null) {
+                if (!search(p.right, lower, val)) return false;
+            }
+            return true;
+        }
+        return search(root, null, null)
+    };
+</script>
+</body>
+</html>

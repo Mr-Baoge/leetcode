@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} s
+ * @return {string[]}
+ */
+// 此题和全排列II几乎一模一样
+/**
+ * @param {string} s
+ * @return {string[]}
+ */
+var permutation = function(s) {
+  const len = s.length;
+  let res = [];
+  function helper(temp, depth, tree, indexMap) {
+    tree[depth] = {};
+    if (depth === len) {
+      res.push(temp);
+      return;
+    }
+    for (let i = 0; i < len; i++) {
+      //  剪枝
+      if (!indexMap[i] && !tree[depth][s[i]]) {
+        indexMap[i] = true;
+        tree[depth][s[i]] = true
+        helper(temp + s[i], depth + 1, tree, indexMap);
+        indexMap[i] = false;
+      }
+    }
+  }
+  helper('', 0, [], {})
+  return res;
+};
+</script>
+</body>
+</html>

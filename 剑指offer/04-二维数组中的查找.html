@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+let arr = [
+  [1,   4,  7, 11, 15],
+  [2,   5,  8, 12, 19],
+  [3,   6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+]
+
+/**
+ * @param {number[][]} matrix
+ * @param {number} target
+ * @return {boolean}
+ */
+const test = [[1,1]]
+var findNumberIn2DArray = function(matrix, target) {
+  if (!matrix.length) return false;
+  let row = 0,
+      col = matrix[0].length - 1;
+  while (row < matrix.length && col >= 0) {
+    const temp = matrix[row][col];
+    if (temp === target) {
+      return true;
+    }
+    if (target > temp) {
+      row++;
+    }
+    if (target < temp) {
+      col--;
+    }
+  }
+  return false;
+};
+console.log(findNumberIn2DArray(test, 2));
+</script>
+</body>
+</html>

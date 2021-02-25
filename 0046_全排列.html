@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 给定一个不包含重复数字的序列，返回所有不重复的全排列。
+
+    /**
+     * @param {number[]} nums
+     * @return {number[][]}
+     */
+
+    let test = [];
+    var permute = function(nums) {
+        let res = [];
+        function dfs(nums, temp, map, index) {
+            if (temp.length === nums.length) {
+                res.push(temp);
+                return;
+            }
+            for (let i = 0; i < nums.length; i++) {
+                if (!map[i]) { // 没有用过，才往下走
+                    temp.push(nums[i]);
+                    map[i] = true; // 记录是否出现过
+                    dfs(nums, temp.slice(), map, i);
+                    temp.pop();
+                    map[i] = false;
+                }
+            }
+        }
+        dfs(nums, [], {}, 0);
+        return res
+    };
+    console.log(permute(test));
+</script>
+</body>
+</html>

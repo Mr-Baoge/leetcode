@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {number[]} nums
+     * @param {number} val
+     * @return {number}
+     */
+    var removeElement = function(nums, val) {
+        let len = nums.length;
+        let i = 0;
+        while (i < len) {
+            if (nums[i] === val) {
+                nums.splice(i, 1);
+                len--;
+                continue;
+            }
+            i++;
+        }
+    };
+</script>
+</body>
+</html>

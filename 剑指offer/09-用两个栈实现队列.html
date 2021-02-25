@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 用两个栈实现一个队列。队列的声明如下，请实现它的两个函数 appendTail 和 deleteHead ，
+// 分别完成在队列尾部插入整数和在队列头部删除整数的功能。(若队列中没有元素，deleteHead 操作返回 -1 )
+
+// 用两个栈 意味着 这两个数组只有 push 和 pop 方法
+
+// 自己实现的是添加的时候倒来倒去， 看了题解以后 发现删除的时候才进行操作 比较合适。
+// 既stack1负责添加，stack2负责维护需要删除的 优先pop出stack2中的元素  stack2为空才会从stack1倒进来。
+var CQueue = function() {
+  this.stack1 = [];
+  this.stack2 = [];
+};
+
+/**
+ * @param {number} value
+ * @return {void}
+ */
+CQueue.prototype.appendTail = function(value) {
+  const len = this.stack1.length;
+  // 借用stack2暂时存放
+  for (let i = 0; i < len; i++) {
+    this.stack2.push(this.stack1.pop());
+  }
+  this.stack1.push(value);
+  // 再倒回来
+  for (let i = 0; i < len; i++) {
+    this.stack1.push(this.stack2.pop());
+  }
+};
+
+/**
+ * @return {number}
+ */
+CQueue.prototype.deleteHead = function() {
+  if (this.stack1.length) {
+    return this.stack1.pop();
+  }
+  return -1;
+};
+
+/**
+ * Your CQueue object will be instantiated and called as such:
+ * var obj = new CQueue()
+ * obj.appendTail(value)
+ * var param_2 = obj.deleteHead()
+ */
+</script>
+</body>
+</html>

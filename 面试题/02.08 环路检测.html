@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+// 是否成环 快慢指针
+// 但是要检测出环起点 需要点数学证明
+// 2 * (a + b) = a + b + c + b;
+// a = c;
+var detectCycle = function(head) {
+  let slow = head;
+  let fast = head;
+  while(fast) {
+    slow = slow.next;
+    fast = fast.next;
+    if (fast) fast = fast.next;
+    if (slow === fast) break;
+  }
+  if (!fast) return null;
+  fast = head;
+  while (fast !== slow) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+  return fast;
+};
+</script>
+</body>
+</html>

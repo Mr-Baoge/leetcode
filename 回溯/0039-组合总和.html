@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @return {number[][]}
+ */
+var combinationSum = function(candidates, target) {
+  const len = candidates.length;
+  let res = [];
+  candidates.sort((a, b) => a - b);
+  function helper(temp, sum, start) {
+    if (sum === target) { // 2 结束条件
+      res.push(temp);
+      return;
+    }
+    for (let i = start; i < len; i++) {
+      if (sum + candidates[i] > target) { // 剪枝 前提是数组必须排序
+        return;
+      }
+      helper([...temp, candidates[i]], sum + candidates[i], i) // 这里如果是数组元素可以重复使用，就传i 如果只能使用一次 当然就是i + 1;
+    }
+  }
+  helper([], 0, 0)
+  return res;
+};
+
+console.log(combinationSum([2, 3, 5], 7));
+
+</script>
+</body>
+</html>

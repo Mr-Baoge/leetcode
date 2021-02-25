@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var postorderTraversal = function(root) {
+  if (!root) return [];
+  let res = [];
+  function back(node) {
+    node.left && back(node.left);
+    node.right && back(node.right);
+    res.push(node.val);
+  }
+  back(root);
+  return res;
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[][]} A
+ * @return {number}
+ */
+// 思路
+// 1、先检查每行开头第一位 是1不翻转 是0就翻转。
+// 2、检查每列 如果这一列1多 就不翻转 1少就翻转。
+// 3、统计总数 return
+var matrixScore = function(A) {
+  const rowLen = A.length;
+  const colLen = A[0].length;
+  function reverse(type, i) {
+    // 翻转行
+    if (type === 'row') {
+      A[i] = A[i].map(item => item ? 0 : 1);
+      console.log(`翻转第${i}行`)
+    }
+  //  翻转列
+    else {
+      A.forEach(row => {
+        row[i] = row[i] ? 0 : 1;
+      })
+      console.log(`翻转第${i}列`)
+    }
+  }
+// 检查每行开头
+  A.forEach((row, index) => {
+    if (!row[0]) reverse('row', index);
+  })
+// 检查每列 第一列不用检查 因为全是1。
+  for (let i = 1; i < colLen; i++) {
+    let count = 0;
+    for (let j = 0; j < rowLen; j++) {
+      if (A[j][i]) count++;
+    }
+  //  count小于一半才翻转
+    if (count < Math.ceil(rowLen / 2)) reverse('col', i)
+  }
+  console.log(A);
+// 输出
+  return A.reduce((sum, b) => sum + parseInt(b.join(''), 2), 0)
+};
+let test = [[0,0,1,1],[1,0,1,0],[1,1,0,0]];
+console.log(matrixScore(test));
+
+</script>
+</body>
+</html>

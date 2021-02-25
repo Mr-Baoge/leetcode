@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script type="module">
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+import { generateLink } from "../util/link-list.js";
+let link = generateLink([1,2,3,3,2,1]);
+// 思路 cache缓存。
+// 如果不能使用cache 只能暴力 二重循环。
+var removeDuplicateNodes = function(head) {
+  if (!head || !head.next) return head;
+  let cache = {};
+  let p = head;
+  cache[p.val] = true;
+  while(p && p.next) {
+    console.log(p.next.val, cache[p.next.val]);
+    if (cache[p.next.val]) {
+      p.next = p.next.next;
+    } else {
+      cache[p.next.val] = true;
+      p = p.next;
+    }
+  }
+  console.log(cache);
+  return head;
+};
+
+
+
+console.log(removeDuplicateNodes(link));
+
+</script>
+</body>
+</html>

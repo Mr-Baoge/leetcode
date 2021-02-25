@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+// 1、分别遍历链表记录链表长度
+// 2、长的先走，走到剩余两条链表长度相等
+// 3、各走一步 ，找到相等节点return 走完还没有相遇的话return null;
+var getIntersectionNode = function(headA, headB) {
+  if (!headA || !headB) return null;
+  let pA = headA,
+    countA = 0,
+    pB = headB,
+    countB = 0;
+  while(pA || pB) {
+    if (pA) {
+      countA++;
+      pA = pA.next;
+    }
+    if (pB) {
+      countB++;
+      pB = pB.next;
+    }
+  }
+      pA = headA,
+      pB = headB;
+    while(countA > countB) {
+      countA--;
+      pA = pA.next;
+    }
+    while(countA < countB) {
+      countB--;
+      pB = pB.next;
+    }
+  while (pA && pB) {
+      if (pA === pB) return pA;
+      pA = pA.next;
+      pB = pB.next;
+  }
+  return null;
+};
+</script>
+</body>
+</html>

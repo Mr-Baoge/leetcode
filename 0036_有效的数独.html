@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {character[][]} board
+     * @return {boolean}
+     */
+    let test = [
+        ["5","3",".",".","7",".",".",".","."],
+        ["6",".",".","1","9","5",".",".","."],
+        [".","9","8",".",".",".",".","6","."],
+        ["8",".",".",".","6",".",".",".","3"],
+        ["4",".",".","8",".","3",".",".","1"],
+        ["7",".",".",".","2",".",".",".","6"],
+        [".","6",".",".",".",".","2","8","."],
+        [".",".",".","4","1","9",".",".","5"],
+        [".",".",".",".","8",".",".","7","9"]
+    ]
+    var isValidSudoku = function(board) {
+        let rows = [],
+            cols = [],
+            box = [];
+        // 初始化
+        for(let i = 0; i < 9; i++) {
+            rows.push({});
+            cols.push({});
+            box.push({});
+        }
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                let curr = board[i][j];
+                let boxIndex = Math.floor(i / 3) * 3 + Math.floor(j / 3);
+                if (curr !== '.') {
+                    console.log('boxIndex', boxIndex);
+                    console.log(curr);
+                    console.log(i, j);
+                    console.log(rows[i][curr], cols[j][curr], box[boxIndex][curr]);
+                    if (rows[i][curr] || cols[j][curr] || box[boxIndex][curr]) {
+                        return false;
+                    } else {
+                        rows[i][curr] = 1;
+                        cols[j][curr] = 1;
+                        box[boxIndex][curr] = 1;
+                    }
+                }
+            }
+        }
+        console.log(rows);
+        console.log(cols);
+        console.log(box);
+        return true;
+    };
+    console.log(isValidSudoku(test));
+</script>
+</body>
+</html>

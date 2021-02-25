@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number} n
+ * @return {number}
+ */
+// f(n) = Math.max(f(n - k) * k) k ∈ [2, n - 2]
+// 当 n <= 3
+// f(2) = 1;
+// f(3) = 2;
+
+// 当 n > 3;
+// f(2) = 2;
+// f(3) = 3;
+
+// 动态规划-递归(先求大的 再求小的)
+var cuttingRope = function(n) {
+//  特殊情况 n <= 3;
+  if (n <= 3) {
+    return n - 1;
+  }
+  const cache = {
+    2: 2,
+    3: 3
+  };
+  const helper = function(n) {
+    if (cache[n]) {
+      return cache[n]
+    }
+    let max = 0;
+    for (let k = 2; k <= n - 2; k++) {
+      max = Math.max(max, helper(n - k) * k);
+    }
+    cache[n] = max;
+    return max;
+  }
+  return helper(n)
+};
+
+// dp-迭代(先求小的 再求大的)
+var cuttingRope = function(n) {
+//  特殊情况 n <= 3;
+  if (n <= 3) {
+    return n - 1;
+  }
+  const cache = {
+    2: 2,
+    3: 3
+  };
+  for (let i = 4; i <= n; i++) {
+    cache[i] = 0;
+    // 结束条件可以改为 k <= i / 2 具体证明就不会了，就是贪心的思想 肯定是从相对大答案中得到 比如 f(30) 用到的子答案一定不会是 f(15)以下的，因为尽可能的分割成多段(3、2)才能使结果尽可能的大.
+    for (let k = 2; k <= i - 2; k++) {
+      cache[i] = Math.max(cache[i], cache[i - k] * k);
+    }
+  }
+  return cache[n]
+};
+console.log(cuttingRope(8));
+</script>
+</body>
+</html>

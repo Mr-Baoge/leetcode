@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+// 你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？
+// 1、快慢指针找到中间节点
+// 2、翻转中间节点之后的节点
+// 3、对比。
+function reverseList(head) {
+  if (!head || !head.next) return head;
+  let prev = null;
+  let curr = head;
+  while(curr) {
+    let temp = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = temp;
+  }
+  return prev;
+}
+function findMiddleNode(head) {
+  if (!head || !head.next) return head;
+  let dummy = new ListNode(null, head);
+  let slow = dummy;
+  let fast = dummy;
+  while(fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  return slow;
+}
+
+var isPalindrome = function(head) {
+  if (!head || !head.next) return true;
+
+  const endOfFirstHalf = findMiddleNode(head); // 前一半的尾结点
+  const startOfSecondHalf = reverseList(endOfFirstHalf.next); // 后一半的开始节点
+
+  let p1 = head;
+  let p2 = startOfSecondHalf;
+  while(p2) {
+    if (p1.val !== p2.val) return false;
+    p1 = p1.next;
+    p2 = p2.next;
+  }
+  return true;
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string} haystack
+     * @param {string} needle
+     * @return {number}
+     */
+    const s1 = 'mississippi';
+    const s2 = 'issip';
+    // 自己写的
+    var strStr = function(haystack, needle) {
+        const l1 = haystack.length;
+        const l2 = needle.length;
+        if (l2 > l1) {
+            return -1;
+        }
+        if (!l2) {
+            return 0;
+        }
+        for (let i = 0; i <= l1 - l2; i++) {
+                    let p = i;
+                    let j = 0;
+                    while(haystack[p] === needle[j]){
+                        if (j === l2 - 1) {
+                            return i;
+                        }
+                        p++;
+                        j++;
+                    }
+        }
+        return -1;
+    };
+    // 看答案后  更快的
+    var strStr2 = function(haystack, needle) {
+        const l1 = haystack.length;
+        const l2 = needle.length;
+        if (l2 > l1) {
+            return -1;
+        }
+        if (!l2) {
+            return 0;
+        }
+        for (let i = 0; i <= l1 - l2; i++) {
+
+        }
+        return -1;
+    };
+    console.log(strStr2(s1, s2));
+</script>
+</body>
+</html>

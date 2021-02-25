@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    const s = "ianikjekfbfrllbau";
+    const lengthOfLongestSubstring = function(s) {
+        let cache = {};
+        let arr = [];
+        let max = 0;
+        const len = s.length;
+        for (let i = 0; i < len; i++) {
+            arr.push((s[i]));
+            if (!cache[s[i]]) {
+                cache[s[i]] = 1;
+                const len = arr.length;
+                max = len > max ? len : max;
+            } else {
+                for (let j = 0; j < len; j++) {
+                    if (arr[j] === s[i]){
+                        let delArr = arr.splice(0, j + 1);
+                        const delLen = delArr.length;
+                        for(let k = 0; k < delLen - 1; k++){
+                            delete(cache[delArr[k]])
+                        }
+                        break;
+                    }
+                }
+
+            }
+        }
+        return max;
+    };
+    console.log(lengthOfLongestSubstring(s));
+</script>
+</body>
+</html>

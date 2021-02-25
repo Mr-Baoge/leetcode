@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    nums = [1, 4, 2, 3]
+    var arrayPairSum = function(nums) {
+        let arr = nums.sort((a, b) => a - b);
+        console.log(arr);
+        // arr.forEach((item, index) => {
+        //     if (index % 2 === 0) {
+        //         sum += item;
+        //     }
+        // });
+       const sum = arr.reduce((pre, next, index) => {
+           console.log(pre, next);
+           if (index % 2 === 0) {
+                pre += next;
+            }
+           return pre
+        });
+        return sum
+    };
+    console.log(arrayPairSum(nums));
+</script>
+</body>
+</html>

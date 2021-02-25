@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。
+//
+// 返回 s 所有可能的分割方案。
+//
+// 示例:
+//
+// 输入: "aab"
+// 输出:
+// [
+//   ["aa","b"],
+//   ["a","a","b"]
+// ]
+
+/**
+ * @param {string} s
+ * @return {string[][]}
+ */
+var partition = function(s) {
+  const len = s.length;
+  let res = [];
+  let path = [];
+  function check(s) {
+    const len = s.length
+    for (let i = 0; i < Math.floor(len / 2); i++) {
+      if (s[i] !== s[len - i - 1]) {
+        return false;
+      }
+    }
+    return true;
+  }
+  function helper(s, start) {
+    if (start === len) {
+      res.push([...path]);
+      return;
+    }
+    for (let i = start; i < len; i++) {
+      if (!check(s.slice(start, i + 1))) {
+        continue;
+      }
+      path.push(s.slice(start, i + 1));
+      helper(s, i + 1);
+      path.pop();
+    }
+  }
+  helper(s, 0);
+  return res;
+};
+console.log(partition('aab'));
+</script>
+</body>
+</html>

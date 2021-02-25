@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number} N
+ * @return {number}
+ */
+//
+// 给定一个非负整数 N，找出小于或等于 N 的最大的整数，同时这个整数需要满足其各个位数上的数字是单调递增。
+//
+// （当且仅当每个相邻位数上的数字 x 和 y 满足 x <= y 时，我们称这个整数是单调递增的。）;
+//  思路
+//  1、遍历数字 顺序的不变 逆序的第一个数字减一  后面补0
+
+//  自己写的
+var monotoneIncreasingDigits = function(N) {
+  N = N + '';
+  let res = '0';
+  const len = N.length;
+  let i = 0;
+  while(N[i] >= (N[i - 1] || 0) && N[i] <= N[i + 1] && i < len - 1) {
+    res += N[i];
+    i++;
+  }
+  if (i === len - 1) return N; // 顺序 直接return;
+  // 向前找到第一个不等于这个数的index;
+  while(N[i] === N[i - 1] && i > 1) {
+    i--;
+    res = res.slice(0, res.length - 1);
+  }
+  res += N[i] - 1;
+  i++;
+  for (;i < len; i++) {
+    res += '9'
+  }
+  return +res;
+};
+// 答案
+var monotoneIncreasingDigits = function(N) {
+  N = N + '';
+  let i = 1;
+  let res = N.split('');
+  const len = N.length;
+  while(i < len && N[i] >= N[i - 1]) {
+    i++;
+  }
+  if (i < len) {
+    while(i > 0 && N[i] < N[i - 1]) {
+      i--;
+    }
+    res[i] = res[i] - 1;
+    for (; i < len; i++) {
+      res[i] = 9;
+    }
+  }
+  return +res.join('');
+};
+</script>
+</body>
+</html>

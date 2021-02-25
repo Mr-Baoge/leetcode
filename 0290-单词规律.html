@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} pattern
+ * @param {string} s
+ * @return {boolean}
+ */
+var wordPattern = function(pattern, s) {
+  let map = {};
+  let map2 = {};
+  let arr = s.split(' ');
+  const len = pattern.length;
+  if (arr.length !== len) return false;
+  for (let i = 0; i < len; i++) {
+    if (!map[pattern[i]] && !map2[arr[i]]) {
+      map[pattern[i]] = arr[i];
+      map2[arr[i]] = pattern[i];
+      continue;
+    }
+    if (map[pattern[i]] && map2[arr[i]]) {
+      if (map[pattern[i]] !== arr[i]) {
+        return false;
+      }
+    }
+    else {
+      return false;
+    }
+  }
+  return true;
+};
+let a = "abba";
+let b = "dog dog dog dog";
+console.log(wordPattern(a, b));
+</script>
+</body>
+</html>

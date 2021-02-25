@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * // Definition for a Node.
+ * function Node(val, next, random) {
+ *    this.val = val;
+ *    this.next = next;
+ *    this.random = random;
+ * };
+ */
+
+/**
+ * @param {Node} head
+ * @return {Node}
+ */
+// 深拷贝。
+var copyRandomList = function(head) {
+  if (!head) return head;
+  let p = head,
+      map = new Map(),
+      res = new Node(null),
+      curr = res;
+  while(p) {
+    let temp = new Node();
+    temp.val = p.val;
+    temp.next = p.next;
+    map.set(p, temp); // 核心
+    p = p.next;
+    curr.next = temp;
+    curr = temp;
+  }
+
+  curr = res.next;
+  p = head;
+  while(curr) {
+    curr.random = p.random ? map.get(p.random) : null;
+    curr = curr.next;
+    p = p.next;
+  }
+  return res.next;
+};
+
+ function Node(val, next, random) {
+    this.val = val;
+    this.next = next;
+    this.random = random;
+ };
+
+let d = new Node(4, null, null);
+let c = new Node(3, d, d);
+let b = new Node(2, c, d);
+let a = new Node(1, b, d);
+const copy = copyRandomList(a);
+console.log(copy.val === a.val);
+console.log(copy === a);
+
+</script>
+</body>
+</html>

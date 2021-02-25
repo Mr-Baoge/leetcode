@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {number} x
+     * @param {number} n
+     * @return {number}
+     */
+    // 超时
+    // var myPow = function(x, n) {
+    //     const len =  Math.abs(n);
+    //     let res = 1;
+    //   for (let i = 0; i < len; i++) {
+    //       res *= x;
+    //   }
+    //   return n > 0 ? res : 1 / res;
+    // };
+    var myPow = function(x, n) {
+            if (Math.abs(x) === 1) {
+                if (x < 0 && n & 1) { // 只有当 x < 0 和 n为奇数时，才是负数
+                    return -1
+                }
+                return 1
+            }
+            let count =  Math.abs(n);
+            let res = 1;
+            let step = 1;
+            let map = {
+                1: x,
+            };
+            while(count > 0) {
+                 step = count - step >= 0 ? step : 1;
+                 res *= map[step];
+                 count -= step;
+                 if (step !== 1) {
+                     map[step + step] = map[step] * map[step] ;
+                     step += step;
+                 } else { // step为1的时候
+                     map[step + 1] = map[step] * x ;
+                     step += 1;
+                 }
+            }
+            return res =  n > 0 ? res : 1 / res;
+        };
+    console.log(myPow(1.00012, 1024));
+</script>
+</body>
+</html>

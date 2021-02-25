@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number} x
+ * @param {number} n
+ * @return {number}
+ */
+// 第一版 基本思路  超时
+var myPow = function(x, n) {
+  let res = 1;
+  let count = Math.abs(n);
+  while(count--) {
+    res *= x
+  }
+  return n > 0 ? res : 1 / res;
+};
+// 第二版
+var myPow = function(x, n) {
+  let res = 1;
+  let count = Math.abs(n);
+  let step = 1;
+  let cache = {
+    1: x,
+  }
+  while(count > 0) {
+    if (count >= step) {
+      if (!cache[step]) {
+        cache[step] = cache[step / 2] * cache[step / 2]
+      }
+      res *= cache[step];
+      count -= step;
+      step *= 2;
+    } else {
+      res *= x;
+      count--;
+      step = 1;
+    }
+  }
+  return n > 0 ? res : 1 / res;
+};
+
+console.log(myPow(2, 8));
+console.log(myPow(2, 9));
+console.log(myPow(2, 10));
+console.log(myPow(2, -15));
+</script>
+</body>
+</html>

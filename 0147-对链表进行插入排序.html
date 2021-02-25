@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script type="module">
+import {generateLink, ListNode} from "./util/link-list.js";
+let arr = [1, 1];
+generateLink(arr)
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+// 插入排序是迭代的，每次只移动一个元素，直到所有元素可以形成一个有序的输出列表。
+// 每次迭代中，插入排序只从输入数据中移除一个待排序的元素，找到它在序列中适当的位置，并将其插入。
+// 重复直到所有输入数据插入完为止。
+
+  // 思路 第一遍
+// 将每个节点存到数组中，最后遍历数组next => ；
+// var insertionSortList = function(head) {
+//   if (!head) return head;
+//   let p = head;
+//   let sortArr = [];
+//   while(p) {
+//     let len = sortArr.length;
+//     let i = len - 1;
+//     let targetVal = p.val;
+//     while( i >= 0 && targetVal < sortArr[i].val) {
+//       sortArr[i + 1] = sortArr[i];
+//       i--;
+//     }
+//     sortArr[i + 1] = p;
+//     p = p.next;
+//     console.log(JSON.parse(JSON.stringify(sortArr)));
+//
+//   }
+//   const len = sortArr.length;
+//     for (let i = 0; i < len; i++) {
+//     sortArr[i].next = sortArr[i + 1] || null;
+//   }
+//   return sortArr[0];
+// };
+
+// 3个指针 一个用来遍历  另外两个分别记录已排序link的头部和尾部
+// 如果curr > tail tail => curr;
+var insertionSortList = function(head) {
+    if (!head) return head;
+    let curr = head.next;
+    let tail = head;
+    let dummyHead = new ListNode(0, head);
+    while(curr) {
+      if (curr.val >= tail.val) {
+        tail = tail.next;
+      }
+        else {
+          let p = dummyHead;
+          // 找到某个节点的下个节点比curr.val小；
+          while(p.next.val <= curr.val) {
+            p = p.next;
+          }
+          tail.next = curr.next;
+          curr.next = p.next;
+          p.next = curr;
+        }
+      curr = tail.next;
+    }
+    return dummyHead.next;
+  };
+console.log(insertionSortList(arr[0]));
+
+
+</script>
+</body>
+</html>

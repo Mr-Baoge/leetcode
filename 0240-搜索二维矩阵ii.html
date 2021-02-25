@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[][]} matrix
+ * @param {number} target
+ * @return {boolean}
+ */
+var searchMatrix = function(matrix, target) {
+  const rowLen = matrix.length;
+  const colLen = matrix[0].length;
+  let row = 0;
+  let col = colLen - 1;
+  while (row <= rowLen && col >= 0) {
+    const search = matrix[row][col];
+    if (search === target) {
+      return true;
+    } else if (search < target) {
+      row++
+    } else {
+      col--
+    }
+  }
+  return false;
+};
+</script>
+</body>
+</html>

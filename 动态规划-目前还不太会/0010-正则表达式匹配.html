@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} s
+ * @param {string} p
+ * @return {boolean}
+ */
+// dp[i][j] = {
+// 1、s[i] === p[j] && dp[i - 1][j - 1] (p[j] 是个普通字符)
+// 2、dp[i - 1][j - 1] (p[j] === '.')
+// 3、if (s[i] === p[j - 1]) dp[i - 1][j] else dp[i][j - 2]  (p[j] === '*')
+// }
+var isMatch = function(s, p) {
+  const sLen = s.length;
+  const pLen = p.length;
+  let dp = new Array(sLen + 1).fill(1).map(item => new Array(pLen + 1).fill(false));
+  // 边界 即两个空字符串是可以匹配的。空用0表示，下标又是从0开始 所以最后的结果应该是dp[sLen][pLen];
+  // 初始化 空字符串和任何非空字符比较 都应该是false 不匹配。也就是dp[0]中除了dp[0][0]是true 其他的dp[0][1] dp[0][2] dp[0][3]等都是false；
+  dp[0][0] = true;
+  // 注意这里的i j 都是长度 不是下标 所以要-1取下标
+  for (let i = 0; i <= sLen; i++) {
+    for (let j = 1; j <= pLen; j++) {
+      if (p[j - 1] !== '*') {
+        if (check(i, j)) {
+          dp[i][j] = dp[i][j] || dp[i - 1][j - 1]
+        }
+      } else {
+        if (check(i, j - 1)) {
+          dp[i][j] = dp[i][j] || dp[i - 1][j];
+        } else {
+          dp[i][j] = dp[i][j - 2];
+        }
+      }
+    }
+  }
+  function check(i, j) {
+    if (i === 0) {
+      return false;
+    }
+    if (p[j - 1] === '.') {
+      return true;
+    }
+    return  p[j - 1] === s[i - 1];
+  }
+  return dp[sLen][pLen];
+};
+
+console.log(isMatch('abcd', 'a*b*c*d*'));
+
+</script>
+</body>
+</html>

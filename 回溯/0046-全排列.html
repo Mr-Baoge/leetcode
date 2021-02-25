@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var permute = function(nums) {
+  const len = nums.length;
+  let res = [];
+  function helper(temp, depth, indexMap) { // indexMap 也可以换成visited 前者记录访问过的下标，后者记录访问过的值。
+    if (depth === len) {
+      res.push(temp);
+      return;
+    }
+    for (let i = 0; i < len; i++) {
+      if (indexMap[i] !== true) {
+        indexMap[i] = true;
+        helper([...temp, nums[i]], depth + 1, indexMap);
+        indexMap[i] = false;
+      }
+    }
+  }
+  helper([], 0, {});
+  return res;
+};
+</script>
+</body>
+</html>

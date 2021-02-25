@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} senate
+ * @return {string}
+ */
+ // 自己写的
+ var predictPartyVictory = function(senate) {
+  let D = [],
+    R = [];
+  const len = senate.length;
+  let died = {};
+  for (let i = 0; i < len; i++) {
+    if (senate[i] === 'D') {
+      D.push(i)
+    } else {
+      R.push(i);
+    }
+  }
+
+  function diedNext(list, index) {
+    const targetIndex = list.findIndex(item => item > index);
+    console.log(list, index, targetIndex);
+    let diedIndex;
+    if (targetIndex !== -1) {
+      diedIndex = list.splice(targetIndex, 1);
+    } else {
+      diedIndex = list.shift();
+    }
+    died[diedIndex] = true;
+  }
+
+  while(D.length && R.length) {
+    for (let i = 0; i < len; i++) {
+      if (died[i]) continue;
+      if (senate[i] === 'D') {
+        console.log('是D')
+        diedNext(R, i);
+      } else {
+        console.log('是R')
+        diedNext(D, i);
+      }
+    }
+  }
+  console.log(D, R)
+  return D.length ? 'Dire' : 'Radiant';
+};
+let test = 'RRDDD';
+console.log(predictPartyVictory(test));
+
+
+// 答案
+var predictPartyVictory = function(senate) {
+  const len = senate.length;
+  let D = [],
+    R = [];
+  Array.from(senate).forEach((item, index) => {
+    if (item === 'D') {
+      D.push(index);
+    } else {
+      R.push(index);
+    }
+  })
+  while (D.length && R.length) {
+    if (D[0] < R[0]) { // D0 存活
+      D.push(D[0] + len);
+    } else { // R0 存活
+      R.push(R[0] + len);
+    }
+    D.shift();
+    R.shift();
+  }
+  return D.length ? 'Dire' : 'Radiant'
+}
+</script>
+</body>
+</html>

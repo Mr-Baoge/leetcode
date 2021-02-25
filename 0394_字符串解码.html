@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var decodeString = function(s) {
+  let countStack = [];
+  let resStack = [];
+  let count = '';
+  let res = '';
+  [].forEach.call(s, (item => {
+    if (item === '[') {
+      countStack.push(count);
+      resStack.push(res);
+      count = '';
+      res = '';
+    } else if (item === ']') {
+      let currCount = countStack.pop();
+      let temp = resStack.pop();
+      for (let i = 0; i < currCount; i++) {
+        temp += res;
+      }
+      res = temp;
+    } else if (item >= 0 && item <= 9) {
+      count += item;
+    } else {
+      res += item;
+    }
+  }));
+  return res;
+};
+let test = 'ef';
+console.log(decodeString(test));
+</script>
+</body>
+</html>

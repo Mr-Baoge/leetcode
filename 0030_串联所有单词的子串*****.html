@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string} s
+     * @param {string[]} words
+     * @return {number[]}
+     */
+    // 滑动窗口
+    const s = "wordgoodgoodgoodbestword";
+    const words =["word","good","best","good"];
+    var findSubstring = function(s, words) {
+
+        const len = s.length;
+        const arrLen = words.length;
+        if (!len || !arrLen) {
+            return []
+        }
+        const wordLen = words[0].length;
+        const wordsLen = wordLen * arrLen;
+        let map = {};
+        function initMap() {
+            map = {};
+            words.forEach((item, index) => {
+                if (!map[item]) {
+                    map[item] = 1;
+                } else {
+                    map[item] ++;
+                }
+            });
+        }
+
+        let count = 0;
+        let index = 0;
+        let temp = '';
+        let result = [];
+        for(let i = 0; i < len - wordsLen + 1; i++) {
+            count = 0; // 初始化count
+            index = i; // 初始化指针
+            initMap(); // 初始化map
+            temp = s.slice(index, index + wordLen);
+            while (map[temp]) {
+                map[temp] --; // 减少到0 说明出现过了， 再次出现 就不会重复了，除非这个单词出现过两次，那么这个数初始就是2；
+                count ++; // 计数 ++
+                index += wordLen;
+                temp = s.slice(index, index + wordLen);
+                if (count === arrLen) {
+                    result.push(i);
+                    break;
+                }
+            }
+        }
+        return result
+    };
+    console.log(findSubstring(s, words));
+</script>
+</body>
+</html>

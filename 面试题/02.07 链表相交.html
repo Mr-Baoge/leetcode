@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+// 自己的基础班写了很多遍就不写了 直接写答案 （相遇）
+var getIntersectionNode = function(headA, headB) {
+  let pA = headA;
+  let pB = headB;
+  while(pA !== pB) {
+    pA = pA.next;
+    pB = pB.next;
+    if (!pA && !pB) { // 不相交
+      return null;
+    }
+    if (pA === null) pA = headB;
+    if (pB === null) pB = headA;
+  }
+  return pA;
+};
+</script>
+</body>
+</html>

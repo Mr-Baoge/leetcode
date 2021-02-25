@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script type="module">
+/**
+ * // Definition for a Node.
+ * function Node(val,prev,next,child) {
+ *    this.val = val;
+ *    this.prev = prev;
+ *    this.next = next;
+ *    this.child = child;
+ * };
+ */
+
+/**
+ * @param {Node} head
+ * @return {Node}
+ */
+var flatten = function(head) {
+  if (!head) return head;
+  function helper(head) {
+    if (!head) return {};
+    let p = head;
+    while (p) {
+      if (p.child) {
+        let next = p.next;
+        let start = helper(p.child);
+        p.next = start;
+        start.prev = p;
+        p.child = null;
+        if (!p.next) {
+          p.next = next;
+          if (next) next.prev = p;
+        }
+      }
+      p = p.next;
+    }
+    return head;
+  }
+  return helper(head);
+};
+
+</script>
+</body>
+</html>

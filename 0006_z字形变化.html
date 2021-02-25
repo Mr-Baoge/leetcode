@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const s = 'asdsadaqneqwe';
+    var convert = function(s, numRows) {
+        if(numRows === 1){
+            return s
+        }
+        const len = s.length;
+        const arr = [];
+        for ( let i = 0; i < numRows; i ++){
+            arr[i] = [];
+        }
+        for ( let i = 0; i < len; i++ ){
+            let num = i % (2*numRows - 2);
+            console.log(i, num);
+            //console.log(num, JSON.parse(JSON.stringify(arr)));
+            if (num < numRows) {
+                arr[num].push(s[i]);
+            }
+            else if (i > numRows - 1){
+                arr[2 * numRows - num -  2].push(s[i])
+            }
+        }
+        console.log(arr);
+        let result  = '';
+        arr.forEach((item, index) => {
+            result += item.join(''  )
+        })
+        console.log(result);
+        return result;
+    };
+    convert(s, 4);
+</script>
+</body>
+</html>

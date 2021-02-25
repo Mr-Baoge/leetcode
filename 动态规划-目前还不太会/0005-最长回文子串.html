@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 最长回文子串
+/**
+ * @param {string} s
+ * @return {string}
+ */
+  function isPalindrome(str) {
+    const len = str.length;
+    const mid = Math.floor(len / 2);
+    for (let i = 0; i < mid; i++) {
+      if (str[i] !== str[len - i - 1]) {
+        return false;
+      }
+    }
+    return true;
+}
+// 1 暴力求解
+
+var longestPalindrome = function(s) {
+    const len = s.length;
+    let ans = '';
+  for (let i = 0; i < len; i++) {
+    for (let j = i; j < len; j++) {
+      const str = s.slice(i, j + 1);
+      if (isPalindrome(str)) {
+        if (str.length > ans.length) {
+          ans = str;
+        }
+      }
+    }
+  }
+  return ans;
+};
+// 暴力基础优化 j的初始值是 i + ans.length
+var longestPalindrome = function(s) {
+  const len = s.length;
+  let ans = '';
+  for (let i = 0; i < len; i++) {
+    for (let j = i + ans.length; j < len; j++) {
+      const str = s.slice(i, j + 1);
+      if (isPalindrome(str)) {
+        if (str.length > ans.length) {
+          ans = str;
+        }
+      }
+    }
+  }
+  return ans;
+};
+console.log(longestPalindrome('a'));
+
+// 动态规划
+// [
+//   true,
+//         true,
+//              ,true
+// ]
+//  P[i, j] = s[i] === s[j] && P[i + 1][j - 1];
+var longestPalindrome = function(s) {
+  const len = s.length;
+  if (len < 2) return s;
+  let dp = new Array(len).fill(0).map((item, index) => {
+    let arr = new Array(len).fill(false);
+    arr[index] = true;
+    return arr;
+  });
+  let begin = 0;
+  let maxLen = 1;
+  // 由于P[i, j]依赖于P[i + 1][j - 1], 也就是矩阵当前位置左下角的值，所以我们可以按列填写
+  for (let j = 1; j < len; j++) {
+    // 不需要填写对角线以下的
+    for (let i = 0; i < j; i++) {
+      // 两边不相等
+      if (s[i] !== s[j]) {
+        dp[i][j] = false;
+      } else { // 两边相等
+        if (j - i < 3) {
+          console.log(i, j);
+          dp[i][j] = true;
+        } else {
+          dp[i][j] = dp[i + 1][j - 1];
+        }
+      }
+
+      if (dp[i][j] && j - i + 1 > maxLen) {
+        begin = i;
+        maxLen = j - i + 1;
+      }
+    }
+  }
+  console.log(dp);
+  return s.slice(begin, begin + maxLen)
+};
+longestPalindrome('abbabc')
+
+</script>
+</body>
+</html>

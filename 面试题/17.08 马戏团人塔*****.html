@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} height
+ * @param {number[]} weight
+ * @return {number}
+ */
+var bestSeqAtIndex = function(height, weight) {
+  let data = [];
+  height.forEach((height, index) => {
+    data.push({height: height, weight: weight[index]});
+  });
+  // 注意这里在身高相等的情况下 需要按照体重倒序排列 因为不然的话答案有可能多
+  // 考虑下[{160, 100}, {165, 110}, {170, 120}, {170, 125}, {170, 130}, {180, 140}] 这样的数组 如果体重升序排列 得到的答案会是 6;是错误的 正确答案是4
+  // 因为使用二分查找 得到最长递增子序列的个数时：
+  // 有个特点，只有被插入的数大于tails整个数组的数时，才会插入到数组的最后，不会覆盖数组中的某个元素。
+  // 而在这题中，身高体重都必须严格递增，所以数据相等的情况下应该需要被覆盖。
+  // 所以我们需要考虑怎么才能让他被覆盖，也就是在需要遍历的数组中，让体重大的放在前面，小的放在后面，所以当遍历到体重小的数据时，不满足上面的特点，就会被覆盖。也就打到了我们的效果。
+  data.sort((a, b) => a.height - b.height || b.weight - a.weight);
+// 按体重找最长递增子序列;
+  const len = data.length;
+  let tails = [];
+  let res = 0;
+  for (let i = 0; i < len; i++) {
+    let left = 0;
+    let right = res;
+    while(left < right) {
+      const mid = Math.floor(left + (right - left) / 2);
+      if (tails[mid].weight < data[i].weight) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+    tails[left] = data[i];
+    if (left === res) res++;
+  }
+  return res;
+};
+console.log(bestSeqAtIndex([160, 165, 170, 170, 170, 180], [100, 110, 120, 125, 130, 140]));
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[][]} matrix
+ * @param {number} target
+ * @return {boolean}
+ */
+// 对于排序矩阵
+// 个人感觉可以找具有特性的那个数字，这个数字比目标数字大，就可以下移，比目标数字小就可以左移。
+// 这个数字可以是每行的最后一个
+var searchMatrix = function(matrix, target) {
+  const rowLen = matrix.length;
+  if (!rowLen) return false;
+  const colLen = matrix[0].length;
+  if (!colLen) return false;
+  let row = 0;
+  let col = colLen - 1;
+  while(row < rowLen && col > 0) {
+    const value = matrix[row][col];
+    if (value === target) return true;
+    else if (value > target) {
+      col--;
+    }
+    else if (value < target) {
+      row++;
+    }
+  }
+  return false;
+};
+</script>
+</body>
+</html>

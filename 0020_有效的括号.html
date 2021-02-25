@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string} s
+     * @return {boolean}
+     */
+    const s = '((';
+    var isValid = function(s) {
+        const len = s.length;
+        if(!len) {
+            return true;
+        }
+        if(len & 1) {
+            return false;
+        }
+        const arr = [];
+        const obj = {
+            '[' : ']',
+            '{' : '}',
+            '(' : ')'
+        }
+        for(let i = 0; i < len; i++) {
+            if(obj[s[i]]){
+                arr.push(s[i]);
+                console.log(arr);
+                continue;
+            }
+            if(obj[arr[arr.length - 1]] !== s[i]) {
+                return false;
+            }else{
+                arr.pop();
+            }
+        }
+        return arr.length ? false : true;
+    };
+    console.log(isValid(s));;
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="display: flex;justify-content: center; align-items: center;height:800px">
+<div style="text-align: center">
+    <h1>对不起，您没有权限访问!</h1>
+</div>
+<script>
+const upperCaseFirst = function(info) {
+  const arrayFlag = Array.isArray(info);
+  if (arrayFlag) {
+    info.forEach(item => {
+      if (typeof item === 'object') {
+        upperCaseFirst(item);
+      }
+    })
+  } else {
+    console.log(info);
+    Object.keys(info).forEach(key => {
+      info[key.slice(0, 1).toUpperCase() + key.slice(1)] = info[key];
+      if (typeof info[key] === 'object') {
+        upperCaseFirst(info[key]);
+      }
+      delete info[key]
+    })
+  }
+}
+
+const test = {
+  a: [
+    {
+      q: 1,
+      w: 2
+    }
+  ],
+  b: {
+    c: 1,
+    d: 2
+  }
+}
+upperCaseFirst(test);
+console.log(test);
+console.log(upperCaseFirst(4));
+</script>
+</body>
+</html>

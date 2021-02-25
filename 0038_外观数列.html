@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {number} n
+     * @return {string}
+     */
+    var countAndSay = function(n) {
+        let cache = {
+            1: '1',
+        };
+        let i = 2;
+        while(i <= n) {
+            cache[i] = read(cache[i - 1]);
+            i++;
+        }
+        function read(str) {
+            const len = str.length;
+            let res = '';
+            for(let i = 0; i < len; i++){
+                let count = 1;
+               while (str[i] === str[i + 1]) {
+                   i++;
+                   count++;
+               }
+               res += count + str[i];
+            }
+            return res;
+        }
+        return cache[n];
+    };
+    console.log(countAndSay(7));
+</script>
+</body>
+</html>

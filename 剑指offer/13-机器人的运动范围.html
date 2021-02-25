@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number} m
+ * @param {number} n
+ * @param {number} k
+ * @return {number}
+ */
+
+// 地上有一个m行n列的方格，从坐标 [0,0] 到坐标 [m-1,n-1] 。一个机器人从坐标 [0, 0] 的格子开始移动，
+// 它每次可以向左、右、上、下移动一格（不能移动到方格外），也不能进入行坐标和列坐标的数位之和大于k的格子。
+// 例如，当k为18时，机器人能够进入方格 [35, 37] ，因为3+5+3+7=18。但它不能进入方格 [35, 38]，因为3+5+3+8=19。
+// 请问该机器人能够到达多少个格子？
+
+// 1、dfs
+var movingCount = function(m, n, k) {
+  const bitSum = (num) =>{
+    let sum = 0;
+    while(num) {
+      sum += num % 10;
+      num = Math.floor(num / 10);
+    }
+    return sum;
+  }
+  const helper = (i, j, used) => {
+    // 出口
+    if (i < 0 || j < 0 || i >= m || j >= n || bitSum(i) + bitSum(j) > k || used[i][j]) {
+      return 0;
+    }
+    used[i][j] = true;
+    // 此题中只需要向下或者向右
+    return 1
+      + helper(i + 1, j, used)
+      + helper(i, j + 1, used)
+  }
+  let used = new Array(m).fill(0).map(() => []);
+  return helper(0, 0, used)
+};
+
+// bfs
+var movingCount1 = function(m, n, k) {
+  const bitSum = (num) =>{
+    let sum = 0;
+    while(num) {
+      sum += num % 10;
+      num = Math.floor(num / 10);
+    }
+    return sum;
+  }
+
+  let queue = [[0, 0]];
+  let res = 0;
+  let used = new Array(m).fill(0).map(() => []);
+  while(queue.length) {
+    let len = queue.length;
+    while(len--) {
+      const[i, j] = queue.shift();
+      if (i < m && j < n && bitSum(i) + bitSum(j) <= k && !used[i][j]) {
+        res++;
+        used[i][j] = true;
+        queue.push([i, j + 1]);
+        queue.push([i + 1, j]);
+      }
+    }
+  }
+  return res;
+}
+
+console.log(movingCount(7, 2, 5));
+console.log(movingCount1(7, 2, 5));
+
+</script>
+</body>
+</html>

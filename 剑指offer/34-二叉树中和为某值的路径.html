@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} sum
+ * @return {number[][]}
+ */
+var pathSum = function(root, sum) {
+  if (!root) return [];
+  let res = [];
+  function helper(node, temp, tempSum) {
+    // 出口: 叶子节点、并且tempSum === sum;
+    if (!node.left && !node.right && tempSum + node.val === sum) {
+      res.push([...temp, node.val])
+    }
+    node.left && helper(node.left, [...temp, node.val], tempSum + node.val);
+    node.right && helper(node.right, [...temp, node.val], tempSum + node.val);
+  }
+  helper(root, [], 0)
+  return res;
+};
+</script>
+</body>
+</html>

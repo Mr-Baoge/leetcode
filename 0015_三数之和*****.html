@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {number[]} nums
+     * @return {number[][]}
+     */
+    // 暴力法
+    const nums = [-1, 0, 1, 2, -1, -4];
+    var threeSum = function(nums) {
+        const len = nums.length;
+        nums = nums.sort( (a, b) => a-b);
+        let result = [];
+        let obj = {};
+        if(nums[len - 1] < 0 || nums[0] > 0) {
+            return [];
+        }
+        for (let i = 0; i < len - 2; i++ ) {
+            if (nums[i] > 0) {
+                break;
+            }
+            for (let j = i + 1; j < len - 1; j++) {
+                for (let q = j + 1; q < len; q ++) {
+                    if (nums[q] < 0) {
+                        continue;
+                    }
+                    if(nums[i] + nums[j] + nums[q] === 0) {
+                        if(!obj['' + nums[i] + nums[j] + nums[q]]){
+                            obj['' + nums[i] + nums[j] + nums[q]] = 1;
+                            result.push([nums[i], nums[j], nums[q]]);
+                        }
+                    }
+                }
+            }
+        }
+        return result
+    };
+
+    /**
+     * @param {number[]} nums
+     * @return {number[][]}
+     */
+        // 双指针
+    var threeSum2 = function(nums) {
+            let result = [];
+            nums.sort( (a, b) => a-b);
+            const len = nums.length;
+            if (nums === null || len < 3) {
+                return []
+            }
+            for (let i = 0; i < len; i++) {
+                if (nums[i] > 0) break;
+                if (i > 0 && nums[i] === nums[i - 1]) continue;
+                let l = i + 1;
+                let r = len - 1;
+                while (l < r) {
+                    const sum = nums[i] + nums[l] + nums[r];
+                    if (sum === 0) {
+                        result.push([nums[i], nums[l], nums[r]]);
+                        while((l < r) && nums[l] === nums[l + 1]) l++;
+                        while((l < r) && nums[r] === nums[r - 1]) r--;
+                        l++;
+                        // r-- 都可以
+                    }else if (sum > 0) {
+                        r--
+                    }else{
+                        l++
+                    }
+                }
+            }
+            return result
+        };
+
+</script>
+</body>
+</html>

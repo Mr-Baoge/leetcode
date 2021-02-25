@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {number[]} nums
+     * @return {number}
+     */
+    // hash 或 排序 都很简单。
+    var majorityElement = function(nums) {
+        let cache = {};
+        const len = nums.length;
+        for (let i = 0; i < len; i++) {
+            if (!cache[nums[i]]) {
+                cache[nums[i]] = 0;
+            }
+            if (++cache[nums[i]] > len / 2) {
+                return nums[i];
+            }
+        }
+    };
+    let test = [1111,1111,1111,2222,2222,2222,2222];
+    console.log(majorityElement(test));
+</script>
+</body>
+</html>

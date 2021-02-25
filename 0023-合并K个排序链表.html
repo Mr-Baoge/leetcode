@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * Definition for singly-linked list.
+     * function ListNode(val) {
+     *     this.val = val;
+     *     this.next = null;
+     * }
+     */
+    /**
+     * @param {ListNode[]} lists
+     * @return {ListNode}
+     */
+    function ListNode(val) {
+        this.val = val;
+        this.next = null;
+    }
+    // var mergeKLists = function(lists) {
+    //    const len = lists.length;
+    //    if(!len) {
+    //        return null;
+    //    }
+    //    if(len === 1) {
+    //        return lists[0]
+    //    }
+    //    function mergeTo(l1, l2){
+    //        let res = new ListNode(-1);
+    //        let temp = res;
+    //        while(l1 && l2) {
+    //            if (l1.val < l2.val) {
+    //                temp.next = l1;
+    //                temp = temp.next;
+    //                l1 = l1.next;
+    //            }else {
+    //                temp.next = l2;
+    //                temp = temp.next;
+    //                l2 = l2.next;
+    //            }
+    //        }
+    //        if (l1) {
+    //            temp.next = l1;
+    //            return res.next;
+    //        }
+    //        if (l2) {
+    //            temp.next = l2;
+    //        }
+    //        return res.next;
+    //    }
+    //    let res = lists[0];
+    //    for(let i = 1; i < len; i++) {
+    //        res =  mergeTo(res, lists[i])
+    //    }
+    //    return res;
+    // };
+    // // 优先队列
+    // function mergeKLists(lists) {
+    //   let currList = lists.filter(item => item);
+    //   let res = new ListNode(-1);
+    //   let temp = res;
+    //   while(currList.length) {
+    //     currList.sort((a, b) => a.val - b.val);
+    //     temp.next = currList[0];
+    //     temp = temp.next;
+    //     if (currList[0] && currList[0].next) {
+    //       currList[0] = currList[0].next;
+    //     } else {
+    //       currList.shift();
+    //     }
+    //   }
+    //   return res.next;
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    二刷
+    var mergeKLists = function(lists) {
+      let res = new ListNode(null);
+      let temp = res;
+      while(lists.length) {
+        let minItem = lists[0];
+        let minIndex = 0;
+        lists.forEach((item, index) => {
+          if (item.val < minItem.val) {
+            minItem = item;
+            minIndex = index;
+          }
+        })
+        temp.next = minItem;
+        temp = temp.next;
+        lists[minIndex] = lists[minIndex].next;
+        if (!minItem) lists.splice(minIndex, 1);
+      }
+      return res.next;
+    };
+
+</script>
+</body>
+</html>

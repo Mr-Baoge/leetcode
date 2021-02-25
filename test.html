@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+  .container .a .b .c .d .e .f .g .h .i .j .k .l .m{
+      color: #000;
+  }
+
+  #n {
+      color: chocolate;
+  }
+
+
+  </style>
+</head>
+
+<body class="container">
+<div id="a" class="a n">
+<div class="b">
+  <div class="c">
+    <div class="d">
+      <div class="e">
+        <div class="f">
+          <div class="g">
+            <div class="h">
+              <div class="i">
+                <div class="j">
+                  <div class="k">
+                    <div class="l">
+                      <div class="m">
+                        <div class="n" id="n">
+                          哈哈哈
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+/**
+ * 找出数组中第k大和第m大的数字相加之和
+ * 说明：实现一个方法，找出数组中第k大的和第m大的数字相加之和
+ * 示例：
+ *   let arr = [1,2,4,4,3,5], k = 2, m = 4
+ *   findTopSum(arr, k, m); // 第2大的数是4，出现2次，第4大的是2，出现1次，所以结果为10
+ */
+function findTopSum(arr, k, m) {
+  /** 代码实现 */
+  const sortArr = arr.sort((a, b) => b - a);
+  let count = 0;
+  let res = 0;
+  let cache = {};
+  for (let item of sortArr) {
+    if (!cache[item]) {
+      cache[item] = true;
+      count++;
+    }
+    if (count === k || count === m) {
+      res += item;
+    }
+  }
+  return res;
+}
+
+
+/**
+ * 按条件合并相邻项
+ * 说明：实现一个方法，可将数组中相邻的项按条件合并
+ * 示例：
+ *   adjoin([1, 2, 3, 4, 5], item => item !== 3); // [[1, 2], 3, [4, 5]]
+ *   adjoin([1, 2, 3, 4], item => item < 3); // [[1, 2], 3, 4]
+ */
+function adjoin(arr, condition) {
+  /* 代码实现 */
+  let res = [];
+  let temp = [];
+  for (let item of arr) {
+    if (condition(item)) {
+      temp.push(item);
+    } else {
+      temp.length && res.push(temp);
+      temp = [];
+      res.push(item);
+    }
+  }
+  temp.length && res.push(temp);
+  return res;
+}
+
+
+
+// /**
+//  * 实现一个EatMan
+//  * 说明：实现一个EatMan，EatMan可以有以下一些行为
+//  * 示例：
+//  *  1. EatMan(“Hank”)输出:
+//  *   Hi! This is Hank!
+//  *  2. EatMan(“Hank”).eat(“dinner”).eat(“supper”)输出
+//  *   Hi This is Hank!
+//  *   Eat dinner~
+//  *   Eat supper~
+//  *  3. EatMan(“Hank”).eat('dinner').eatFirst(“lunch”)输出
+//  *   Eat lunch~
+//  *   Hi This is Hank!
+//  *   Eat supper~
+//  *  4. EatMan(“Hank”).eat('dinner').eatFirst(“lunch”).eatFirst("breakfast")输出
+//  *   Eat breakfast~
+//  *   Eat lunch~
+//  *   Hi This is Hank!
+//  *   Eat supper~
+//  */
+//
+// function EatMan(name){
+//   return new _eatman(name);
+// }
+// function _eatman(name) {
+//   /** 代码实现 */
+//   function logName() {
+//     console.log(`Hi This is {name}`);
+//   }
+//   this.called = [logName];
+//   setTimeout(() => {
+//     this.called.forEach(cb => cb())
+//   })
+// }
+// _eatman.prototype.eat = function(str) {
+//   this.called.push(() => console.log("Eat" + str));
+//   return this;
+// }
+//
+// _eatman.prototype.eatFirst = function(str) {
+//   this.called.unshift(() => console.log("Eat" + str))
+//   return this;
+// }
+//
+
+
+
+
+</script>
+</body>
+</html>

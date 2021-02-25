@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} s
+ * @return {number}
+ */
+// 方法1 暴力 超时！
+var longestValidParentheses = function(s) {
+  let ans = 0;
+  const len = s.length;
+
+  for (let i = 0; i < len - 1; i++) {
+    // for (let j = i + 1; j < len; j++) {
+    // 可以优化一下 + ans
+    // for (let j = i + ans + 1; j < len; j++) {
+    //   if (isValid(s.slice(i, j + 1))) {
+    //     ans = Math.max(j - i + 1, ans)
+    //   }
+    // }
+    // 还可以倒着来 先判断大的。 避免多余的计算
+    for (let j = len - 1; j >= i + ans + 1; j--) {
+      if (isValid(s.slice(i, j + 1))) {
+        ans = Math.max(j - i + 1, ans);
+        break;
+      }
+    }
+  }
+  return ans;
+  function isValid(str) {
+    let leftCount = 0;
+    const len = str.length;
+    if (len % 2 !== 0) return false;
+    for (let i = 0; i < len; i++) {
+      if (str[i] === '(') {
+        leftCount++;
+      } else if (str[i] === ')' && leftCount > 0) {
+        leftCount--
+      } else {
+        return false;
+      }
+    }
+    return leftCount === 0;
+  }
+};
+
+// 方法2 动态规划 思考一下哪里做了很多重复的计算工作？ 应该是比如从第0位向后找的时候 0 - (len - 1)已经判断过了， 但是从1往后找的时候 又重复判断了 1 - (len - 1)
+// 用动态规划 缓存结果
+//
+
+
+isValid(['a','v'])
+</script>
+</body>
+</html>

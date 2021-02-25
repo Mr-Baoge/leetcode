@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * @param {string[]} strs
+     * @return {string}
+     */
+    const strs = ["","","fl221"];
+    var longestCommonPrefix = function(strs) {
+        const len = strs.length;
+        if (!len) {
+            return ''
+        }
+        if ( len === 1) {
+            return strs[0]
+        }
+        let result = '';
+        for (let i = 0; i < strs[0].length; i++) {
+            if(strs.every( (item, index) => item[i] === strs[0][i])){
+                result += strs[0][i];
+                continue;
+            }
+            return result;
+        }
+        return result;
+    };
+    console.log(longestCommonPrefix(strs));
+</script>
+</body>
+</html>

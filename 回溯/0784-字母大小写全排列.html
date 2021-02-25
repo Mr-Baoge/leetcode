@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} S
+ * @return {string[]}
+ */
+// 由于此题的输出，每一位的顺序是不变的，则不需要进行普通回溯算法的遍历，只需要判断当前位置即可。传入一个index。
+// 递归
+var letterCasePermutation = function(S) {
+  const len = S.length;
+  let res = [];
+
+  function isChar(s) {
+    const value = s.charCodeAt();
+    if ((value >= 65 && value <= 90) || (value >=97 && value <= 122)) return true;
+    return false;
+  }
+
+  function helper(temp, i) {
+    if (temp.length === len) {
+      res.push(temp);
+      return;
+    }
+      if (isChar(S[i])) {
+        helper(temp + S[i].toUpperCase(), i + 1);
+        helper(temp + S[i].toLowerCase(), i + 1);
+      } else {
+        helper(temp + S[i], i + 1);
+      }
+  }
+  helper('', 0);
+  return res;
+};
+
+// 迭代
+// 思路很简单
+// 1、碰到非字符 遍历结果数组 每项直接加上这个字符。
+// 2、碰到字符 结果数组 先copy一份放入数组中  再前半段加上小写字符，后半段加上大写字符。
+var letterCasePermutation = function(S) {
+  const len = S.length;
+  if (!len) return [];
+  let res = [''];
+
+  function isChar(s) {
+    const value = s.charCodeAt();
+    if ((value >= 65 && value <= 90) || (value >=97 && value <= 122)) return true;
+    return false;
+  }
+
+  for (let item of S) {
+    if (!isChar(item)) {
+      res = res.map(temp => temp + item);
+    } else {
+      res = [...res, ...res];
+      const mid = res.length / 2;
+      res = res.map((temp, index) => temp += index < mid ? item.toLowerCase() : item.toUpperCase());
+    }
+  }
+  return res;
+};
+console.log(letterCasePermutation('a1b2'));
+
+</script>
+</body>
+</html>

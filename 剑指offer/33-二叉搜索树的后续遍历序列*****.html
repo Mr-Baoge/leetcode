@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {number[]} postorder
+ * @return {boolean}
+ */
+// 看题解后理解
+// 1.后序遍历可以划分出左子树和右子树，因为最后一位是根节点
+// 2.从左往右遍历 找到第一个大于跟的数，根据二叉搜索树的定义（左子树的所有数<root,右子树的所有数>root）
+// 那么这个数后面的所有数也应该大于跟，满足条件就继续向下遍历
+var verifyPostorder = function(postorder) {
+  function helper(i, j) {
+    if (i >= j) return true;
+    const rootVal = postorder[j];
+    let p = i;
+    while(postorder[p] < rootVal) p++;
+    let leftEnd = p - 1;
+    while(postorder[p] > rootVal) p++;
+    // p走完之后 如果满足二叉搜索树的条件 p 应该 === 结束点j;
+    return p === j && helper(i, leftEnd) && helper(leftEnd + 1, j - 1)
+  }
+  return helper(0, postorder.length - 1)
+};
+</script>
+</body>
+</html>

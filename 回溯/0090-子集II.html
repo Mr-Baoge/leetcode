@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+// 给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
+
+// 输入: [1,2,2]
+// 输出:
+//   [
+//     [2],
+//     [1],
+//     [1,2,2],
+//     [2,2],
+//     [1,2],
+//     []
+//   ]
+
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+
+// 在子集问题的基础上 加剪枝。
+// 思路1 排序后 判断当前分支下如何当前数和上一个数不同，才继续开分支，不然就剪枝（不继续往下走）
+var subsetsWithDup = function(nums) {
+  const len = nums.length;
+  let res = [];
+  nums.sort((a, b) => a - b); // 必须先排序 ↓
+  function helper(temp, start) {
+    res.push(temp);
+    for (let i = start; i < len; i++) {
+      if (i > start && nums[i] === nums[i - 1]) { // 这一步才会有效。
+        continue;
+      }
+      helper([...temp, nums[i]], i + 1);
+    }
+  }
+  helper([], 0)
+  return res;
+};
+// 思路2 用cache
+var subsetsWithDup = function(nums) {
+  const len = nums.length;
+  let res = [];
+  let cache = {};
+  nums.sort((a, b) => a - b); // 这里也需要先排序 因为比如[3,1,2] 和 [3,2,1] 答案是视为重复的！！
+  function helper(temp, start) {
+    if (!cache[temp.join()]) {
+      res.push(temp);
+      cache[temp.join()] = true;
+    }
+    for (let i = start; i < len; i++) {
+      helper([...temp, nums[i]], i + 1);
+    }
+  }
+  helper([], 0)
+  return res;
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+// 加个标志
+var hasCycle = function(head) {
+  while(head) {
+    if (head.flag) {
+      return true;
+    } else {
+      head.flag =1;
+      head = head.next;
+    }
+  }
+  return false;
+};
+// 快慢指针
+var hasCycle2 = function(head) {
+  let slow = head;
+  let fast = head;
+  while(fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) {
+      return true;
+    }
+  }
+  return false;
+};
+
+function bindThis(f, oTarget) {
+  return function(...args) {
+    f.apply(oTarget, args)
+  }
+}
+function getUrlParam(sUrl, sKey) {
+  return sUrl
+    .split('?')[1]
+    .split('&')
+    .filter(item => item.split("=")[0] === sKey)
+    .map(item => item.split("=")[1])
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const str = "3  -2111   -   321";
+    const myAtoi = function(str) {
+        if (str.slice(0,2) === '- ' || str.slice(0,2) === '+ ' || str.includes('-+') || str.includes('+-')) {
+            return 0;
+        }
+        const reg = /\S/;
+        if(!reg.test(str)){
+            return 0
+        }else{
+            if(reg.exec(str)[0] === '-' || reg.exec(str)[0] === '+') {
+                const reg1 = /\d/;
+                if (!reg1.test(str[reg.exec(str).index + 1])) {
+                    return 0
+                }
+            }
+        }
+        // const reg1 = /^-|\+\s/;
+        const reg2 = /-?\+?\d+/;
+        const reg3 = /-|\+|\d/;
+        console.log(!reg.test(str) , !reg3.test(reg.exec(str)[0]), !reg2.exec(str) , !reg2.test(reg2.exec(str)[0]))
+        if (!reg3.test(reg.exec(str)[0])  || !reg2.exec(str) || !reg2.test(reg2.exec(str)[0])) {
+            return 0;
+        }
+        const res = reg2.exec(str)[0].replace('+', '');
+        if(res > Math.pow(2, 31) - 1) {
+            return Math.pow(2, 31) - 1
+        }
+        if (res < - Math.pow(2, 31)) {
+            return -Math.pow(2, 31)
+        }
+        return  res;
+    };
+    console.log(myAtoi(str))
+
+
+    /* 简便！ */
+    const myAtoi2 = function(str) {
+        // 提取需要的字符
+        const result = str.trim().match(/^(-|\+)?\d+/g);
+        return result
+            ? Math.max(Math.min(Number(result[0]), 2 ** 31 - 1), -(2 ** 31))
+            : 0;
+    };
+</script>
+</body>
+</html>

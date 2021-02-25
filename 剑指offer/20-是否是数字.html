@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isNumber = function(s) {
+  const toNumber = Number(s);
+  return toNumber !== toNumber ? false : typeof toNumber === 'number'
+};
+console.log(isNumber("e"));
+</script>
+</body>
+</html>
